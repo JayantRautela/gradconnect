@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/prisma";
 
-export async function POST(request: Request, { params }: { params: { id: string }}) {
+export async function POST(request: Request, { params }: { params: { studentId: string }}) {
     try {
         const { otp } = await request.json();
-        const studentId = params.id;
+        const studentId = params.studentId;
 
         const student = await prisma.student.findUnique({
             where: {

@@ -12,6 +12,16 @@ export async function POST (request: Request) {
         // yearOfExperience is decimal
         const { name, email, phoneNumber, cgpa, currentCompany, yearOfExperience, passoutYear, isOpenToTakeMentorshipSession, branch, course, password } = await request.json();
 
+        if (passoutYear > new Date().getFullYear()) {
+            return Response.json({
+                success: false,
+                message: "Invalid Passout Year"
+            }, 
+            {
+                status: 400
+            });
+        }
+
         const alumni = await prisma.user.findUnique({
             where: {
                 email: email
