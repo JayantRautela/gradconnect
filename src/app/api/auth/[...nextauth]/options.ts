@@ -37,6 +37,9 @@ export const authOptions: NextAuthOptions = {
                     if (user.role === "ALUMNI" && user.alumni && !user.alumni.isVerified) {
                         throw new Error("Your account is not verified yet. Please wait for admin approval.");
                     }
+                    if (user.role === "STUDENT" && user.student && !user.student.isVerified) {
+                        throw new Error("Verify yourself by entering the OTP send via email");
+                    }
 
                     return {
                         id: user.id,

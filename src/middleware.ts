@@ -13,6 +13,9 @@ export async function middleware(request: NextRequest) {
     if (token?.role === "ALUMNI" && token.alumni?.isVerified === false) {
         return NextResponse.redirect(new URL('/wait', request.url));
     }
+    if (token?.role === "STUDENT" && token?.student?.isVerified === false) {
+        return NextResponse.redirect(new URL('/student/verify', request.url));
+    }
 
     if (
     token &&
