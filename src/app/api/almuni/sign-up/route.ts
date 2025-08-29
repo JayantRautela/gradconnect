@@ -12,12 +12,9 @@ export async function POST (request: Request) {
         // yearOfExperience is decimal
         const { name, email, phoneNumber, cgpa, currentCompany, yearOfExperience, passoutYear, isOpenToTakeMentorshipSession, branch, course, password } = await request.json();
 
-        const alumni = await prisma.alumni.findFirst({
+        const alumni = await prisma.user.findUnique({
             where: {
-                OR: [
-                    { email: email },
-                    { phoneNumber: phoneNumber }
-                ]
+                email: email
             }
         });
 
@@ -35,21 +32,29 @@ export async function POST (request: Request) {
         const hashedPassword = await bcrypt.hash(password, 10);
         const mentorship = isOpenToTakeMentorshipSession === "true";
 
-        await prisma.alumni.create({
+        await prisma.user.create({
             data: {
-                name: name,
                 email: email,
-                phoneNumber: phoneNumber,
-                cgpa: new Prisma.Decimal(cgpa),
-                currentCompany: currentCompany,
-                yearOfExperience: new Prisma.Decimal(yearOfExperience),
-                passoutYear: passoutYear,
-                isOpenToTakeMentorshipSession: mentorship,
-                branch: branch,
-                course: course,
                 password: hashedPassword,
-                isVerified: false
-            }
+                role: "ALUMNI",
+                alumni: {
+                    create: {
+                        name,
+                        phoneNumber,
+                        cgpa: new Prisma.Decimal(cgpa),
+                        currentCompany,
+                        yearOfExperience: new Prisma.Decimal(yearOfExperience),
+                        passoutYear,
+                        isOpenToTakeMentorshipSession: mentorship,
+                        branch,
+                        course,
+                        isVerified: false,
+                    }
+                }
+            },
+            include: {
+                alumni: true, 
+            },
         });
 
         return Response.json({

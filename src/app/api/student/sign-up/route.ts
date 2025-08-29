@@ -35,13 +35,11 @@ export async function POST (request: Request) {
             });
         }
 
-        const existingStudent = await prisma.student.findFirst({
-            where: {
-                email: email,
-            }
+        const existingUser = await prisma.user.findUnique({
+            where: { email },
         });
 
-        if (existingStudent) {
+        if (existingUser) {
             return Response.json({
                 success: false,
                 message: "Student with email already exists"
@@ -54,17 +52,25 @@ export async function POST (request: Request) {
         const hashedPassword = await bcrypt.hash(password, 10);
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-        const user = await prisma.student.create({
+        const user = await prisma.user.create({
             data: {
-                name: name as string,
-                email: email as string,
-                course: course,
-                branch: branch as string,
+                email,
                 password: hashedPassword,
-                currentYear: currentYear,
-                verifyCode: otp,
-                isVerified: false
-            }
+                role: "STUDENT",
+                student: {
+                    create: {
+                        name,
+                        course,
+                        branch,
+                        currentYear,
+                        verifyCode: otp,       
+                        isVerified: false, 
+                    },
+                },
+            },
+            include: {
+                student: true,
+            },
         });
 
         //send verification otp email

@@ -32,17 +32,35 @@ enum Year {
   FIFTH
 }
 
+enum Role {
+  STUDENT
+  ALUMNI
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String?
+  role      Role
+  student   Student?
+  alumni    Alumni?
+  admin     Admin?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Student {
   id                String   @id @default(cuid())
   name              String
-  email             String   @unique
   course            Course
   branch            String
-  password          String
   verifyCode        String
   isVerified        Boolean  @default(false)
   currentYear       Year
   ProfilePictureUrl String?
+  user              User     @relation(fields: [userId], references: [id])
+  userId            String   @unique
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 }
@@ -50,7 +68,6 @@ model Student {
 model Alumni {
   id                            String   @id @default(cuid())
   name                          String
-  email                         String   @unique
   phoneNumber                   String   @unique
   cgpa                          Decimal
   currentCompany                String
@@ -61,7 +78,8 @@ model Alumni {
   ProfilePictureUrl             String?
   branch                        String
   course                        Course
-  password                      String
+  user                          User     @relation(fields: [userId], references: [id])
+  userId                        String   @unique
   createdAt                     DateTime @default(now())
   updatedAt                     DateTime @updatedAt
 }
@@ -69,7 +87,7 @@ model Alumni {
 model Admin {
   id             String @id @default(cuid())
   CollegeName    String @unique
-  email          String @unique
-  password       String
   acceptedDomain String
+  user           User   @relation(fields: [userId], references: [id])
+  userId         String @unique
 }

@@ -9,7 +9,6 @@ export async function GET(request: Request) {
             select: {
                 id: true,
                 name: true,
-                email: true,
                 phoneNumber: true,
                 cgpa: true,
                 currentCompany: true,
@@ -20,7 +19,12 @@ export async function GET(request: Request) {
                 isOpenToTakeMentorshipSession: true,
                 isVerified: true,
                 ProfilePictureUrl: true,
-                createdAt: true
+                createdAt: true,
+                user: {
+                    select: {
+                        email: true
+                    }
+                }
             }
         });
 

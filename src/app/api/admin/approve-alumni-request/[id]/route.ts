@@ -30,18 +30,22 @@ export async function PATCH (request: Request, { params }: { params: { id: strin
             });
         }
 
-        await prisma.alumni.update({
+        const updatedAlumni = await prisma.alumni.update({
             where: {
                 id: id
             },
             data: {
                 isVerified: true
+            },
+            include: {
+                user: true
             }
         });
 
         return Response.json({
             success: true,
-            message: "Alumni verified and sucessfully added"
+            message: "Alumni verified and sucessfully added",
+            data: updatedAlumni
         },
         {
             status: 200
@@ -75,6 +79,9 @@ export async function DELETE (request: Request, { params }: { params: { id: stri
         const alumni = await prisma.alumni.findUnique({
             where: {
                 id: id
+            },
+            include: {
+                user: true
             }
         });
 
@@ -88,15 +95,26 @@ export async function DELETE (request: Request, { params }: { params: { id: stri
             });
         }
 
-        await prisma.alumni.delete({
-            where: {
-                id: id
+        const deletedAlumni = await prisma.$transaction(async (tx) => {
+            await tx.alumni.delete({ 
+                where: { 
+                    id 
+                } 
+            });
+
+            if (alumni.userId) {
+                await tx.user.delete({ where: { 
+                    id: alumni.userId 
+                } });
             }
+
+            return alumni;
         });
 
         return Response.json({
             success: true,
-            message: "Alumni request rejected and deleted"
+            message: "Alumni request rejected and deleted",
+            data: deletedAlumni
         },
         {
             status: 200

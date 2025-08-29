@@ -5,15 +5,11 @@ export async function POST(request: Request) {
     try {
         const { collegeName, email, acceptedDomain, password } = await request.json();
 
-        const college = await prisma.admin.findFirst({
+        const college = await prisma.user.findUnique({
             where: {
-                OR: [
-                { CollegeName: collegeName },
-                { email: email }
-                ]
+                email: email
             }
         });
-
 
         if (college) {
             return Response.json({
@@ -29,12 +25,20 @@ export async function POST(request: Request) {
         const normalizedDomain = acceptedDomain.trim().toLowerCase();
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        await prisma.admin.create({
+        await prisma.user.create({
             data: {
-                CollegeName: normalizedCollege,
                 email: email,
                 password: hashedPassword,
-                acceptedDomain: normalizedDomain
+                role: "ADMIN",
+                admin: {
+                    create: {
+                        CollegeName: normalizedCollege,
+                        acceptedDomain: normalizedDomain,
+                    }
+                }
+            },
+            include: {
+                admin: true
             }
         });
 
