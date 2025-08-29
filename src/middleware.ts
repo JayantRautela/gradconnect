@@ -19,16 +19,22 @@ export async function middleware(request: NextRequest) {
 
     if (
     token &&
-    (url.pathname.startsWith('/student/sign-in') ||
+    (url.pathname.startsWith('/sign-in') ||
         url.pathname.startsWith('/student/sign-up') ||
         url.pathname.startsWith('/alumni/sign-up') ||
         url.pathname.startsWith('/student/verify') ||
+        url.pathname.startsWith('/admin/sign-up') ||
         url.pathname === '/')
     ) {
         return NextResponse.redirect(new URL('/feed', request.url));
     }
 
-    if (!token && (url.pathname.startsWith('/admin/dashboard') || url.pathname.startsWith('/feed'))) {
+    if (!token && (
+        url.pathname.startsWith('/admin/dashboard') || 
+        url.pathname.startsWith('/feed') ||
+        url.pathname.startsWith('/student/dashboard') ||  
+        url.pathname.startsWith('/alumni/dashboard') 
+    )) {
         return NextResponse.redirect(new URL('/sign-in', request.url));
     }
 
