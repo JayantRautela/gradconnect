@@ -5,12 +5,15 @@ export async function POST(request: Request) {
     try {
         const { collegeName, email, acceptedDomain, password } = await request.json();
 
-        const college = await prisma.admin.findUnique({
+        const college = await prisma.admin.findFirst({
             where: {
-                CollegeName: collegeName,
-                email: email
+                OR: [
+                { CollegeName: collegeName },
+                { email: email }
+                ]
             }
         });
+
 
         if (college) {
             return Response.json({
