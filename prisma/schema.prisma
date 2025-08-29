@@ -67,7 +67,8 @@ model Alumni {
 
 model Admin {
   id             String @id @default(cuid())
-  CollegeName    String
+  CollegeName    String @unique
   email          String @unique
+  password       String
   acceptedDomain String
 }
