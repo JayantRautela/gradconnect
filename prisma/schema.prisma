@@ -6,3 +6,68 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Course {
+  BTECH
+  MTECH
+  BCA
+  MCA
+  BSC
+  MSC
+  MBBS
+  BBA
+  MBA
+  PHD
+  BPHARMA
+  MPHARMA
+  BVOC
+  MVOC
+}
+
+enum Year {
+  FIRST
+  SECOND
+  THIRD
+  FOURTH
+  FIFTH
+}
+
+model Student {
+  id                String   @id @default(cuid())
+  name              String
+  email             String   @unique
+  course            Course
+  branch            String
+  password          String
+  verifyCode        String
+  isVerified        Boolean  @default(false)
+  currentYear       Year
+  ProfilePictureUrl String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Alumni {
+  id                            String   @id @default(cuid())
+  name                          String
+  email                         String   @unique
+  phoneNumber                   String   @unique
+  cgpa                          Decimal
+  currentCompany                String
+  yearOfExperience              Decimal
+  passoutYear                   Int
+  isOpenToTakeMentorshipSession Boolean
+  isVerified                    Boolean  @default(false)
+  ProfilePictureUrl             String?
+  branch                        String
+  course                        Course
+  createdAt                     DateTime @default(now())
+  updatedAt                     DateTime @updatedAt
+}
+
+model Admin {
+  id             String @id @default(cuid())
+  CollegeName    String
+  email          String @unique
+  acceptedDomain String
+}
