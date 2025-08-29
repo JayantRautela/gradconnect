@@ -34,6 +34,10 @@ export const authOptions: NextAuthOptions = {
                     const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password!);
                     if (!isPasswordCorrect) throw new Error("Incorrect Password");
 
+                    if (user.role === "ALUMNI" && user.alumni && !user.alumni.isVerified) {
+                        throw new Error("Your account is not verified yet. Please wait for admin approval.");
+                    }
+
                     return {
                         id: user.id,
                         email: user.email,
