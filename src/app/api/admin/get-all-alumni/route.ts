@@ -1,7 +1,41 @@
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]/options";
 
 export async function GET (request: Request) {
     try {
+        const session = await getServerSession(authOptions);
+
+        if (!session?.user?.email) {
+            return Response.json({
+                success: false,
+                message: "Unauthorized"
+            }, 
+            {
+                status: 401
+            });
+        }
+
+        const admin = await prisma.user.findUnique({
+            where: {
+                email: session.user.email
+            }, 
+            include: {
+                admin: true
+            }
+        });
+
+        if (!admin?.admin) {
+            return Response.json(
+            { 
+                success: false, 
+                message: "Admin not found" 
+            },
+            { 
+                status: 404 
+            });
+        }
+
         // example request :- fetch(`/api/alumni?passoutYear=2022`);
         const { searchParams } = new URL(request.url);
         const passoutYear = searchParams.get("passoutYear"); 
@@ -18,7 +52,8 @@ export async function GET (request: Request) {
 
         const alumni = await prisma.alumni.findMany({
             where: {
-                passoutYear: Number(passoutYear)
+                passoutYear: Number(passoutYear),
+                collegeName: admin.admin.CollegeName
             },
             include: {
                 user: {
@@ -29,16 +64,6 @@ export async function GET (request: Request) {
                 }
             }
         });
-
-        if (alumni.length === 0) {
-            return Response.json({
-                success: false,
-                message: "No alumni found"
-            },
-            {
-                status: 404
-            });
-        }
 
         return Response.json({
             success: true,
