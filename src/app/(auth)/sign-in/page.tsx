@@ -107,7 +107,7 @@ export default function Login () {
           
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
             Welcome to{" "}
-            <span className="text-blue-500">AlumniConnect</span>
+            <span className="text-blue-500">GradConnect</span>
           </h1>
           
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
