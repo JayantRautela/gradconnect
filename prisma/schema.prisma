@@ -70,6 +70,7 @@ model Alumni {
   name                          String
   phoneNumber                   String   @unique
   cgpa                          Decimal
+  collegeName                   String 
   currentCompany                String
   yearOfExperience              Decimal
   passoutYear                   Int

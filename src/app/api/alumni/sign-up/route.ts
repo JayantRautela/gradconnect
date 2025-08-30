@@ -10,7 +10,7 @@ export async function POST (request: Request) {
         // course is going to be a radio group
         // passoutYear is going to be a input of year
         // yearOfExperience is decimal
-        const { name, email, phoneNumber, cgpa, currentCompany, yearOfExperience, passoutYear, isOpenToTakeMentorshipSession, branch, course, password } = await request.json();
+        const { name, email, phoneNumber, cgpa, currentCompany, collegeName, yearOfExperience, passoutYear, isOpenToTakeMentorshipSession, branch, course, password } = await request.json();
 
         if (passoutYear > new Date().getFullYear()) {
             return Response.json({
@@ -52,6 +52,7 @@ export async function POST (request: Request) {
                         name,
                         phoneNumber,
                         cgpa: new Prisma.Decimal(cgpa),
+                        collegeName: collegeName,
                         currentCompany,
                         yearOfExperience: new Prisma.Decimal(yearOfExperience),
                         passoutYear,

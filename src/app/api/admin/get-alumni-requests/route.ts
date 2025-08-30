@@ -1,10 +1,46 @@
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]/options";
+
 
 export async function GET(request: Request) {
     try {
+        const session = await getServerSession(authOptions);
+
+        if (!session?.user?.email) {
+            return Response.json({
+                success: false,
+                message: "Unauthorized"
+            }, 
+            {
+                status: 401
+            });
+        }
+
+        const admin = await prisma.user.findUnique({
+            where: {
+                email: session.user.email
+            }, 
+            include: {
+                admin: true
+            }
+        });
+
+        if (!admin?.admin) {
+            return Response.json(
+                { 
+                    success: false, 
+                    message: "Admin not found" 
+                },
+                { 
+                    status: 404 
+                });
+        }
+
         const alumniRequest = await prisma.alumni.findMany({
             where: {
-                isVerified: false
+                isVerified: false,
+                collegeName: admin.admin.CollegeName
             },
             select: {
                 id: true,
