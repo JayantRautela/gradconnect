@@ -3,7 +3,8 @@ import { getToken } from 'next-auth/jwt';
 export { default } from 'next-auth/middleware';
 
 export const config = {
-    matcher: ['/dashboard/:path*', '/sign-in', '/sign-up', '/', '/verify/:path*', '/feed'],
+    matcher: ['/dashboard/:path*', '/sign-in', '/sign-up', '/', '/verify/:path*', '/feed', '/api/admin/:path*',    // 🔒 Protect all admin APIs
+    '/admin/dashboard/:path*'],
 };
 
 export async function middleware(request: NextRequest) {
@@ -36,6 +37,25 @@ export async function middleware(request: NextRequest) {
         url.pathname.startsWith('/alumni/dashboard') 
     )) {
         return NextResponse.redirect(new URL('/sign-in', request.url));
+    }
+
+    if (url.pathname.startsWith('/api/admin')) {
+    if (!token || token.role !== "ADMIN") {
+            return NextResponse.json({ 
+                    success: false, 
+                    message: "Unauthorized" 
+                },
+                { 
+                    status: 401 
+            });
+        }
+    }
+
+
+    if (url.pathname.startsWith('/admin/dashboard')) {
+        if (!token || token.role !== "ADMIN") {
+            return NextResponse.redirect(new URL('/sign-in', request.url));
+        }
     }
 
     return NextResponse.next();
