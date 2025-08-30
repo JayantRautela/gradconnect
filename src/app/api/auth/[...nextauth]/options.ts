@@ -68,6 +68,8 @@ export const authOptions: NextAuthOptions = {
                                 branch: user.alumni.branch,
                                 course: user.alumni.course,
                                 profilePictureUrl: user.alumni.ProfilePictureUrl,
+                                linkedinProfileUrl: user.alumni.linkedinProfileUrl,
+                                portfolioLink: user.alumni.portfolioLink,
                             }
                             : undefined,
                         admin: user.admin

@@ -77,6 +77,8 @@ model Alumni {
   passoutYear                   Int
   isOpenToTakeMentorshipSession Boolean
   isVerified                    Boolean  @default(false)
+  linkedinProfileUrl            String
+  portfolioLink                 String?
   ProfilePictureUrl             String?
   branch                        String
   course                        Course

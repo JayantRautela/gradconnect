@@ -56,6 +56,8 @@ export async function GET(request: Request) {
                 isVerified: true,
                 ProfilePictureUrl: true,
                 createdAt: true,
+                linkedinProfileUrl: true,
+                portfolioLink: true,
                 user: {
                     select: {
                         email: true

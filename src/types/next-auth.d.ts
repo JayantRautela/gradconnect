@@ -28,6 +28,8 @@ declare module 'next-auth' {
             branch: string;
             course: string;
             profilePictureUrl?: string;
+            portfolioLink?: string;
+            linkedinProfileUrl: string;
         },
 
         admin?: {
@@ -76,6 +78,8 @@ declare module 'next-auth/jwt' {
             branch: string;
             course: string;
             profilePictureUrl?: string;
+            portfolioLink?: string;
+            linkedinProfileUrl: string;
         };
 
         admin?: {
