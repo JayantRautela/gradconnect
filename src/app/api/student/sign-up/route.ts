@@ -5,9 +5,12 @@ export async function POST (request: Request) {
     try {
         // course is going to be a radio group
         // current year is also going to be a radio group
-        const { name, email, course, branch, password, currentYear } = await request.json();
+        const { name, email, course, branch, password, currentYear, collegeName } = await request.json();
 
         const admin = await prisma.admin.findFirst({
+            where: {
+                CollegeName: collegeName
+            },
             select: { 
                 acceptedDomain: true 
             }
@@ -63,7 +66,8 @@ export async function POST (request: Request) {
                         course,
                         branch,
                         currentYear,
-                        verifyCode: otp,       
+                        verifyCode: otp,   
+                        collegeName: collegeName,    
                         isVerified: false, 
                     },
                 },

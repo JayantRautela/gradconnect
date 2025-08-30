@@ -59,6 +59,7 @@ model Student {
   verifyCode        String
   isVerified        Boolean  @default(false)
   currentYear       Year
+  collegeName String
   ProfilePictureUrl String?
   user              User     @relation(fields: [userId], references: [id])
   userId            String   @unique
