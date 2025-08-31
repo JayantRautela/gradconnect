@@ -59,6 +59,7 @@ export default function AlumniSignUpPage () {
             branch: "",
             course: "BTECH",
             password: "",
+            profilePhoto: undefined
         }
     });
 
@@ -83,22 +84,32 @@ export default function AlumniSignUpPage () {
         }
         try {
             setIsSubmitting(true);
-            const response = await axios.post<AlumniSignUpResponse>('/api/alumni/sign-up', {
-                name: data.name, 
-                email : data.email, 
-                phoneNumber: data.phoneNumber, 
-                cgpa : data.cgpa, 
-                currentCompany : data.currentCompany, 
-                collegeName : data.collegeName, 
-                yearOfExperience : data.yearOfExperience, 
-                passoutYear : data.passoutYear, 
-                isOpenToTakeMentorshipSession : radioGroupValue(data), 
-                linkedinProfileUrl : data.linkedinProfileUrl, 
-                portfolioLink : data.portfolioLink, 
-                branch : data.branch, 
-                course : data.course, 
-                password : data.password
-            });
+            const formData = new FormData();
+
+            formData.append("name", data.name);
+            formData.append("email", data.email);
+            formData.append("phoneNumber", data.phoneNumber);
+            formData.append("cgpa", data.cgpa.toString());
+            formData.append("currentCompany", data.currentCompany);
+            formData.append("collegeName", data.collegeName);
+            formData.append("yearOfExperience", data.yearOfExperience.toString());
+            formData.append("passoutYear", data.passoutYear.toString());
+            formData.append("isOpenToTakeMentorshipSession", radioGroupValue(data).toString());
+            formData.append("linkedinProfileUrl", data.linkedinProfileUrl);
+            formData.append("portfolioLink", data.portfolioLink as string);
+            formData.append("branch", data.branch);
+            formData.append("course", data.course);
+            formData.append("password", data.password);
+
+            if (data.profilePhoto) {
+            formData.append("profilePhoto", data.profilePhoto);
+            }
+            const response = await axios.post<AlumniSignUpResponse>('/api/alumni/sign-up', 
+                formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            );
             const message = response.data.message;
             toast.success(message);
             router.replace(`/alumni/wait/${data.name}`);
@@ -123,6 +134,7 @@ export default function AlumniSignUpPage () {
                 branch: "",
                 course: "BTECH",
                 password: "",
+                profilePhoto: undefined,
             });
         }
     }
@@ -182,6 +194,28 @@ export default function AlumniSignUpPage () {
                                     <Input 
                                     type="password"
                                     {...field}
+                                    />
+                                </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                    <FormField
+                    name="profilePhoto"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Profile Photo</FormLabel>
+                                <FormControl>
+                                    <Input 
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (file) {
+                                        form.setValue("profilePhoto", file); 
+                                        }
+                                    }}
                                     />
                                 </FormControl>
                             <FormMessage />

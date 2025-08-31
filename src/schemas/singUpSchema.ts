@@ -27,6 +27,7 @@ export const alumniSignUpSchema = z.object({
     isOpenToTakeMentorshipSession: z.enum(["Yes", "No"]),
     linkedinProfileUrl: z.url(),
     portfolioLink: z.url().optional(),
+    profilePhoto: z.any()
 });
 
 export const adminSignUpSchema = z.object({
