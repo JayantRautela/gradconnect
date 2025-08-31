@@ -39,7 +39,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/sign-in', request.url));
     }
 
-    if (url.pathname.startsWith('/api/admin')) {
+    if (url.pathname.startsWith('/api/admin') && (!url.pathname.startsWith('/api/admin/sign-up'))) {
     if (!token || token.role !== "ADMIN") {
             return NextResponse.json({ 
                     success: false, 
