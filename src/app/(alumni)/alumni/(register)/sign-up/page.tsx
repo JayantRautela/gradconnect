@@ -101,7 +101,7 @@ export default function AlumniSignUpPage () {
             });
             const message = response.data.message;
             toast.success(message);
-            router.replace(`/admin/wait/${data.name}`);
+            router.replace(`/alumni/wait/${data.name}`);
         } catch (error) {
             const axiosError = error as AxiosError<AlumniSignUpResponse>;
             const message = axiosError.response?.data.message || "Some Error Occured!";
