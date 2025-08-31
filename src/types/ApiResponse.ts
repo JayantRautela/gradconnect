@@ -15,3 +15,8 @@ export interface AlumniSignUpResponse {
     success: boolean;
     message: string;
 }
+
+export interface StudentVerifyResponse {
+    success: boolean;
+    message: string;
+}
