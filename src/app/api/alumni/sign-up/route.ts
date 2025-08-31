@@ -22,6 +22,22 @@ export async function POST (request: Request) {
             });
         }
 
+        const admin = await prisma.admin.findUnique({
+            where: {
+                CollegeName: collegeName
+            }
+        });
+
+        if (!admin) {
+            return Response.json({
+                success: false,
+                message: "College Does not exists"
+            }, 
+            {
+                status: 400
+            });
+        }
+
         const alumni = await prisma.user.findUnique({
             where: {
                 email: email

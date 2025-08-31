@@ -10,3 +10,8 @@ export interface StudentSignUpResponse {
     message: string;
     userId?: string;
 }
+
+export interface AlumniSignUpResponse {
+    success: boolean;
+    message: string;
+}
