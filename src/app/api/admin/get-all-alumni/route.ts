@@ -37,6 +37,7 @@ export async function GET (request: Request) {
         }
 
         // example request :- fetch(`/api/alumni?passoutYear=2022`);
+        // this when admin click on one of the card in the dashboard.
         const { searchParams } = new URL(request.url);
         const passoutYear = searchParams.get("passoutYear"); 
 

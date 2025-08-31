@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 export async function GET (request: Request, { params }: { params: { id: string }}) {
     try {
         // example request :- /api/admin/alumni/[id]
+        // this is when the admin after clicking on the passout card on the dashboard again clicks on the alumni so this route to get ther data.
         const alumniId = params.id;
 
         if (!alumniId) {
