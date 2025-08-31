@@ -19,10 +19,10 @@ export async function POST (request: Request) {
         if (!admin) {
             return Response.json({ 
                 success: false, 
-                message: "Admin settings not found" 
+                message: "College Not Found" 
             }, 
             { 
-                status: 500 
+                status: 404 
             });
         }
 

@@ -8,7 +8,7 @@ export const studentSignUpSchema = z.object({
     collegeName: z.string(),
     currentYear: z.enum(["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH"]),
     name: z.string(),
-    isVerified: z.boolean().default(false),
+    isVerified: z.boolean(),
     ProfilePictureUrl: z.url().optional(),
 });
 
