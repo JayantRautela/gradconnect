@@ -66,20 +66,11 @@ export async function GET(request: Request) {
             }
         });
 
-        if (alumniRequest.length === 0) {
-            return Response.json({
-                success: false,
-                message: "No verification request found"
-            }, 
-            {
-                status: 404
-            });
-        }
-
         return Response.json({
             success: true,
-            message: "Alumni verification request recieved",
-            alumniRequest
+            message: alumniRequest.length === 0 ? "No pending request" : "Pending Request fetched",
+            alumniRequest,
+            pendingRequest: alumniRequest.length
         }, 
         {
             status: 200

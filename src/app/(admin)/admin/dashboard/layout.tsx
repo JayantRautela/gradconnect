@@ -43,7 +43,7 @@ export default function AdminDashboardLayout({
   const admin = session?.user.admin;
   return (
     <main>
-        <nav className="p-4 md:p-2 shadow-md bg-gray-50">
+        <nav className="p-4 md:p-2 shadow-md bg-gray-100">
           <div className='container mx-auto flex flex-col md:flex-row justify-between items-center'>
             <div className="flex gap-2 items-center">
               <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center">
