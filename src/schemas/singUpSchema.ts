@@ -9,7 +9,7 @@ export const studentSignUpSchema = z.object({
     currentYear: z.enum(["FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH"]),
     name: z.string(),
     isVerified: z.boolean(),
-    ProfilePictureUrl: z.url().optional(),
+    profilePhoto: z.any(),
 });
 
 export const alumniSignUpSchema = z.object({

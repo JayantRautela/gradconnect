@@ -45,7 +45,7 @@ export default function StudentSignUp () {
             currentYear: "FIRST",  
             name: "",
             isVerified: false,
-            ProfilePictureUrl: undefined,
+            profilePhoto: undefined,
         }
     });
 
@@ -56,14 +56,20 @@ export default function StudentSignUp () {
         }
         try {
             setIsSubmitting(true);
-            const response = await axios.post<StudentSignUpResponse>('/api/student/sign-up', {
-                name: data.name, 
-                email: data.email, 
-                course: data.course, 
-                branch: data.branch, 
-                password: data.password, 
-                currentYear: data.currentYear, 
-                collegeName: data.collegeName
+            const formData = new FormData();
+
+            formData.append("name", data.name);
+            formData.append("email", data.email);
+            formData.append("collegeName", data.collegeName);
+            formData.append("branch", data.branch);
+            formData.append("course", data.course);
+            formData.append("password", data.password);
+            const response = await axios.post<StudentSignUpResponse>('/api/student/sign-up', 
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
             });
             const message = response.data.message;
             const userId = response.data.userId;
@@ -75,7 +81,7 @@ export default function StudentSignUp () {
             toast.error(message);
         } finally {
             setIsSubmitting(false);
-            form.reset({ email: "", password: "", course: "BTECH", branch: "", currentYear: "FIRST", collegeName: "", name: "", ProfilePictureUrl: ""});
+            form.reset({ email: "", password: "", course: "BTECH", branch: "", currentYear: "FIRST", collegeName: "", name: "", profilePhoto: ""});
         }
     }
 
@@ -134,6 +140,28 @@ export default function StudentSignUp () {
                                     <Input 
                                     type="password"
                                     {...field}
+                                    />
+                                </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                    <FormField
+                    name="profilePhoto" 
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Profile Photo</FormLabel>
+                                <FormControl>
+                                    <Input 
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (file) {
+                                        form.setValue("profilePhoto", file); 
+                                        }
+                                    }}
                                     />
                                 </FormControl>
                             <FormMessage />

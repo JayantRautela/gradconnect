@@ -1,11 +1,29 @@
 import { prisma } from "@/lib/prisma";
+import { Course, Year } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+    api_key: process.env.CLOUDINARY_API_KEY!,
+    api_secret: process.env.CLOUDINARY_API_SECRET!,
+});
 
 export async function POST (request: Request) {
     try {
         // course is going to be a radio group
         // current year is also going to be a radio group
-        const { name, email, course, branch, password, currentYear, collegeName } = await request.json();
+        // const { name, email, course, branch, password, currentYear, collegeName } = await request.json();
+        const formData = await request.formData();
+        
+        const file = formData.get("profilePhoto") as File | null;
+        const name = formData.get("name") as string;
+        const email = formData.get("email") as string;
+        const course = formData.get("course") as Course;
+        const branch = formData.get("branch") as string;
+        const password = formData.get("password") as string;
+        const collegeName = formData.get("collegeName") as string;
+        const currentYear = formData.get("currentYear") as Year;
 
         const admin = await prisma.admin.findFirst({
             where: {
@@ -55,6 +73,18 @@ export async function POST (request: Request) {
         const hashedPassword = await bcrypt.hash(password, 10);
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
+        let profilePhotoUrl: string | null = null;
+                if (file) {
+                const buffer = Buffer.from(await file.arrayBuffer());
+                const uploadResult = await new Promise<{ secure_url: string }>((resolve, reject) => {
+                    cloudinary.uploader.upload_stream({ folder: "student-profiles" }, (err, result) => {
+                    if (err || !result) reject(err);
+                    else resolve(result as { secure_url: string });
+                    }).end(buffer);
+                });
+                profilePhotoUrl = uploadResult.secure_url;
+                }
+
         const user = await prisma.user.create({
             data: {
                 email,
@@ -69,6 +99,7 @@ export async function POST (request: Request) {
                         verifyCode: otp,   
                         collegeName: collegeName,    
                         isVerified: false, 
+                        ProfilePictureUrl: profilePhotoUrl
                     },
                 },
             },
