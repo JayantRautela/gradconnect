@@ -64,6 +64,8 @@ export default function StudentSignUp () {
             formData.append("branch", data.branch);
             formData.append("course", data.course);
             formData.append("password", data.password);
+            formData.append("currentYear", data.currentYear);
+            formData.append("profilePhoto", data.profilePhoto);
             const response = await axios.post<StudentSignUpResponse>('/api/student/sign-up', 
                 formData,
                 {

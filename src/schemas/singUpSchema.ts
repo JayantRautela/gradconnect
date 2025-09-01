@@ -35,4 +35,5 @@ export const adminSignUpSchema = z.object({
     password: z.string().min(6, "Password must have atleast 6 characters").max(12, "Password should not be more than 12 characters"),
     CollegeName: z.string(),
     acceptedDomain: z.string(),
+    collegeLogo: z.any(),
 });

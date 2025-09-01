@@ -74,16 +74,16 @@ export async function POST (request: Request) {
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
         let profilePhotoUrl: string | null = null;
-                if (file) {
-                const buffer = Buffer.from(await file.arrayBuffer());
-                const uploadResult = await new Promise<{ secure_url: string }>((resolve, reject) => {
-                    cloudinary.uploader.upload_stream({ folder: "student-profiles" }, (err, result) => {
-                    if (err || !result) reject(err);
-                    else resolve(result as { secure_url: string });
-                    }).end(buffer);
-                });
-                profilePhotoUrl = uploadResult.secure_url;
-                }
+        if (file) {
+            const buffer = Buffer.from(await file.arrayBuffer());
+            const uploadResult = await new Promise<{ secure_url: string }>((resolve, reject) => {
+                cloudinary.uploader.upload_stream({ folder: "student-profiles" }, (err, result) => {
+                if (err || !result) reject(err);
+                else resolve(result as { secure_url: string });
+                }).end(buffer);
+            });
+            profilePhotoUrl = uploadResult.secure_url;
+        }
 
         const user = await prisma.user.create({
             data: {

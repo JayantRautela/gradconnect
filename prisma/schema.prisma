@@ -95,4 +95,5 @@ model Admin {
   acceptedDomain String
   user           User   @relation(fields: [userId], references: [id])
   userId         String @unique
+  collegeLogo    String
 }

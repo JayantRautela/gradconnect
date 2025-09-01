@@ -32,19 +32,31 @@ export default function AdminSignUp () {
             email: "",
             password: "",
             CollegeName: "",
-            acceptedDomain: ""
+            acceptedDomain: "",
+            collegeLogo: undefined,
         }
     });
 
     const onSubmit = async (data: z.infer<typeof adminSignUpSchema>) => {
+        if (!data.collegeLogo) {
+            toast.error("College Logo is Required");
+            return;
+        }
         try {
             setIsSubmitting(true);
-            const response = await axios.post<AdminSignUpResponse>('/api/admin/sign-up', {
-                collegeName: data.CollegeName, 
-                email: data.email, 
-                acceptedDomain: data.acceptedDomain, 
-                password: data.password
-            });
+            const formData = new FormData();
+
+            formData.append("email", data.email);
+            formData.append("password", data.password);
+            formData.append("acceptedDomain", data.acceptedDomain);
+            formData.append("CollegeName", data.CollegeName);
+            formData.append("collegeLogo", data.collegeLogo);
+            const response = await axios.post<AdminSignUpResponse>('/api/admin/sign-up', 
+                formData,
+                {
+                    headers: { 'Content-Type': 'multipart/form-Data' }
+                }
+            );
             const message = response.data.message;
             toast.success(message);
             router.replace('/sign-in');
@@ -54,7 +66,7 @@ export default function AdminSignUp () {
             toast.error(message);
         } finally {
             setIsSubmitting(false);
-            form.reset({ email: "", password: "", acceptedDomain: "", CollegeName: ""});
+            form.reset({ email: "", password: "", acceptedDomain: "", CollegeName: "", collegeLogo: undefined});
         }
     }
 
@@ -96,6 +108,28 @@ export default function AdminSignUp () {
                                     <Input 
                                     type="password"
                                     {...field}
+                                    />
+                                </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                    <FormField
+                    name="collegeLogo" 
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Profile Photo</FormLabel>
+                                <FormControl>
+                                    <Input 
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (file) {
+                                            form.setValue("collegeLogo", file); 
+                                        }
+                                    }}
                                     />
                                 </FormControl>
                             <FormMessage />
