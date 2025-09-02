@@ -20,7 +20,7 @@ export async function GET (request: Request) {
             }, 
             {
                 status: 404
-            });
+            }); 
         }
 
         return Response.json({ 
