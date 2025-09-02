@@ -74,3 +74,15 @@ export interface AlumniPendingRequestResponse {
     pendingRequest: number;
     alumniRequest: Alumni[];
 }
+
+export interface AcceptingAlumniRequestResponse {
+    success: boolean;
+    message: string;
+    data?: Alumni;
+}
+
+export interface RejectingAlumniRequestResponse {
+    success: boolean;
+    message: string;
+    data?: Alumni;
+}

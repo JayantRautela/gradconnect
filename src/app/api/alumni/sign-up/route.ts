@@ -106,7 +106,7 @@ export async function POST (request: Request) {
                         name,
                         phoneNumber,
                         cgpa: new Prisma.Decimal(cgpa),
-                        collegeName: collegeName,
+                        collegeName: normalizedCollegeName,
                         currentCompany,
                         yearOfExperience: new Prisma.Decimal(yearOfExperience),
                         passoutYear,
