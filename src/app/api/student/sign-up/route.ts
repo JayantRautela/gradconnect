@@ -46,7 +46,7 @@ export async function POST (request: Request) {
 
         const acceptedDomain = admin.acceptedDomain;
 
-        if (!email.toLowerCase().endsWith(`@${acceptedDomain.toLowerCase()}`)) {
+        if (!email.toLowerCase().endsWith(`@${acceptedDomain.trim().toLowerCase()}`)) {
             return Response.json({
                 success: false,
                 message: "Invalid Email. Enter your official College Email Id"

@@ -36,6 +36,8 @@ export async function POST (request: Request) {
         const course = formData.get("course") as string;
         const password = formData.get("password") as string;
 
+        const normalizedCollegeName = collegeName.trim().toLowerCase();
+
         if (passoutYear > new Date().getFullYear()) {
             return Response.json({
                 success: false,
@@ -48,7 +50,7 @@ export async function POST (request: Request) {
 
         const admin = await prisma.admin.findUnique({
             where: {
-                CollegeName: collegeName
+                CollegeName: normalizedCollegeName
             }
         });
 
