@@ -86,3 +86,9 @@ export interface RejectingAlumniRequestResponse {
     message: string;
     data?: Alumni;
 }
+
+export interface AlumniDetailsResponse {
+    success: boolean;
+    message: string;
+    alumni?: Alumni;
+}

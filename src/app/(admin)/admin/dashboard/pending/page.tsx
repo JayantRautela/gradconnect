@@ -7,12 +7,14 @@ import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Badge, Check, Eye, Loader2, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Pending() {
   const [isLoading, setIsLoading] = useState(false);
   const [alumni, setAlumni] = useState<Alumni[]>([]);
   const [isAccepting, setIsAccepting] = useState(false);
   const [isRejecting, setIsRejecting] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchRequest = async () => {
@@ -57,7 +59,7 @@ export default function Pending() {
     // api calls to be made
     console.log(id);
     try {
-      setIsAccepting(true);
+      setIsRejecting(true);
       const response = await axios.delete<RejectingAlumniRequestResponse>(`/api/admin/approve-alumni-request/${id}`);
       const message = response.data.message;
       toast.success(message);
@@ -66,13 +68,14 @@ export default function Pending() {
         const message = axiosError.response?.data.message || "Some Error Occured";
         toast.error(message);
     } finally {
-      setIsAccepting(false);
+      setIsRejecting(false);
     }
   };
 
-  const showDetails = (id: string) => {
+  const showDetails = async (id: string) => {
     // api calls to be made
     console.log(id);
+    router.push(`/admin/dashboard/pending/${id}`);
   }
 
   const getDaysPending = (createdAt: string | Date) => {
