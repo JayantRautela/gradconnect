@@ -153,12 +153,12 @@ export default function AlumniDetailsPage() {
                   <div className="text-sm space-y-1">
                     {/* <p><span className="text-muted-foreground">Position:</span> {alumni?.currentPosition}</p> */}
                     <p>
-                      <span className="text-muted-foreground">LinkedIn Link:</span>{" "}
-                      {alumni?.linkedinProfileUrl || "—"}
+                      <a className="hover:underline text-blue-500" href={alumni?.linkedinProfileUrl} target="_blank">LinkedIn Link</a>
                     </p>
                     <p>
-                      <span className="text-muted-foreground">Portfolio Link:</span>{" "}
-                      {alumni?.portfolioLink}
+                      {
+                        alumni?.portfolioLink && <a className="hover:underline text-blue-500" href={alumni?.portfolioLink} target="_blank">Portfolio Link</a>
+                      }
                     </p>
                   </div>
                 </div>
