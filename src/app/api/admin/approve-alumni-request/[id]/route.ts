@@ -95,21 +95,11 @@ export async function DELETE (request: Request, { params }: { params: { id: stri
             });
         }
 
-        const deletedAlumni = await prisma.$transaction(async (tx) => {
-            await tx.alumni.delete({ 
-                where: { 
-                    id 
-                } 
-            });
-
-            if (alumni.userId) {
-                await tx.user.delete({ where: { 
-                    id: alumni.userId 
-                } });
+        const deletedAlumni  = await prisma.alumni.delete({
+            where: {
+                id: id
             }
-
-            return alumni;
-        });
+        })
 
         return Response.json({
             success: true,
