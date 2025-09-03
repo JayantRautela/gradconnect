@@ -59,7 +59,8 @@ model Student {
   verifyCode        String
   isVerified        Boolean  @default(false)
   currentYear       Year
-  collegeName String
+  collegeName       String
+  rollNo            String
   ProfilePictureUrl String?
   user              User     @relation(fields: [userId], references: [id])
   userId            String   @unique
@@ -83,6 +84,8 @@ model Alumni {
   ProfilePictureUrl             String?
   branch                        String
   course                        Course
+  currentPosition               String
+  rollNo                        String
   user                          User     @relation(fields: [userId], references: [id])
   userId                        String   @unique
   createdAt                     DateTime @default(now())
@@ -90,10 +93,12 @@ model Alumni {
 }
 
 model Admin {
-  id             String @id @default(cuid())
-  CollegeName    String @unique
+  id             String   @id @default(cuid())
+  CollegeName    String   @unique
   acceptedDomain String
-  user           User   @relation(fields: [userId], references: [id])
-  userId         String @unique
+  user           User     @relation(fields: [userId], references: [id])
+  userId         String   @unique
   collegeLogo    String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
