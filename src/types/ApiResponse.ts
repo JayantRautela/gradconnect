@@ -98,3 +98,9 @@ export interface GetPassoutYearsResponse {
     message: string;
     years?: number[];
 }
+
+export interface GetAlumniResponse {
+    success: boolean;
+    message: string;
+    alumni?: Alumni[];
+}
