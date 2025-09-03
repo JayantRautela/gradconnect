@@ -156,7 +156,7 @@ export default function Pending() {
                         Current Status
                       </h4>
                       <div className="text-sm space-y-1">
-                        {/* <p><span className="text-muted-foreground">Position:</span> {request.currentPosition}</p> */}
+                        <p><span className="text-muted-foreground">Position:</span> {request.currentPosition}</p>
                         <p>
                           <span className="text-muted-foreground">
                             Company:

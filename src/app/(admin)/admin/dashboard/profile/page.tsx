@@ -73,7 +73,7 @@ export default function Profile() {
                     </div> */}
                     <div className="flex items-center gap-3 text-sm">
                       <Calendar size={16} className="text-muted-foreground" />
-                      {/* <span>Joined {admin?.user.createdAt.toISOString()}</span> */}
+                      <span>Joined {admin?.createdAt.toLocaleDateString()}</span>
                     </div>
                   </CardContent>
                 </Card>

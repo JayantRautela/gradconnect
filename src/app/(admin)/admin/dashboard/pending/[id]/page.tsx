@@ -109,7 +109,7 @@ export default function AlumniDetailsPage() {
                     Current Status
                   </h4>
                   <div className="text-sm space-y-1">
-                    {/* <p><span className="text-muted-foreground">Position:</span> {alumni?.currentPosition}</p> */}
+                    <p><span className="text-muted-foreground">Position:</span> {alumni?.currentPosition}</p>
                     <p>
                       <span className="text-muted-foreground">Company:</span>{" "}
                       {alumni?.currentCompany || "—"}

@@ -24,6 +24,7 @@ export async function POST (request: Request) {
         const password = formData.get("password") as string;
         const collegeName = formData.get("collegeName") as string;
         const currentYear = formData.get("currentYear") as Year;
+        const rollNo = formData.get("rollNo") as string;
 
         const admin = await prisma.admin.findFirst({
             where: {
@@ -99,7 +100,8 @@ export async function POST (request: Request) {
                         verifyCode: otp,   
                         collegeName: collegeName,    
                         isVerified: false, 
-                        ProfilePictureUrl: profilePhotoUrl
+                        ProfilePictureUrl: profilePhotoUrl,
+                        rollNo: rollNo.trim().toLowerCase()
                     },
                 },
             },

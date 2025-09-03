@@ -35,6 +35,8 @@ export async function POST (request: Request) {
         const branch = formData.get("branch") as string;
         const course = formData.get("course") as string;
         const password = formData.get("password") as string;
+        const currentPosition = formData.get("currentPosition") as string;
+        const rollNo = formData.get("rollNo") as string;
 
         const normalizedCollegeName = collegeName.trim().toLowerCase();
 
@@ -116,7 +118,9 @@ export async function POST (request: Request) {
                         portfolioLink,
                         course: course as Course,
                         isVerified: false,
-                        ProfilePictureUrl: profilePhotoUrl
+                        ProfilePictureUrl: profilePhotoUrl,
+                        currentPosition,
+                        rollNo: rollNo.trim().toLowerCase()
                     }
                 }
             },

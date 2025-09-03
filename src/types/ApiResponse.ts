@@ -30,21 +30,13 @@ export interface Admin {
     }
     userId: string;
     collegeLogo: string;
+    createdAt: Date;
 }
 
 export interface AdminProfileResponse {
     success: boolean;
     message: string;
-    admin: {
-        id: string;
-        CollegeName: string;
-        acceptedDomain: string;
-        user: {
-            email: string;
-        }
-        userId: string;
-        collegeLogo: string;
-    }
+    admin: Admin
 }
 
 export interface Alumni {
@@ -66,6 +58,8 @@ export interface Alumni {
     isOpenToTakeMentorshipSession: boolean;
     linkedinProfileUrl: string;
     portfolioLink: string | null;
+    currentPosition: string;
+    rollNo: string
 }
 
 export interface AlumniPendingRequestResponse {

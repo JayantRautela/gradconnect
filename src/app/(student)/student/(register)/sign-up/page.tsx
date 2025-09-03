@@ -46,6 +46,7 @@ export default function StudentSignUp () {
             name: "",
             isVerified: false,
             profilePhoto: undefined,
+            rollNo: "",
         }
     });
 
@@ -66,6 +67,7 @@ export default function StudentSignUp () {
             formData.append("password", data.password);
             formData.append("currentYear", data.currentYear);
             formData.append("profilePhoto", data.profilePhoto);
+            formData.append("rollNo", data.rollNo);
             const response = await axios.post<StudentSignUpResponse>('/api/student/sign-up', 
                 formData,
                 {
@@ -83,7 +85,7 @@ export default function StudentSignUp () {
             toast.error(message);
         } finally {
             setIsSubmitting(false);
-            form.reset({ email: "", password: "", course: "BTECH", branch: "", currentYear: "FIRST", collegeName: "", name: "", profilePhoto: ""});
+            form.reset({ email: "", password: "", course: "BTECH", branch: "", currentYear: "FIRST", collegeName: "", name: "", profilePhoto: "", rollNo: ""});
         }
     }
 
@@ -141,6 +143,22 @@ export default function StudentSignUp () {
                                 <FormControl>
                                     <Input 
                                     type="password"
+                                    {...field}
+                                    />
+                                </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                    <FormField
+                    name="rollNo"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Roll No</FormLabel>
+                                <FormControl>
+                                    <Input 
+                                    type="text"
                                     {...field}
                                     />
                                 </FormControl>

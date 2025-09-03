@@ -10,6 +10,7 @@ export const studentSignUpSchema = z.object({
     name: z.string(),
     isVerified: z.boolean(),
     profilePhoto: z.any(),
+    rollNo: z.string(),
 });
 
 export const alumniSignUpSchema = z.object({
@@ -19,7 +20,7 @@ export const alumniSignUpSchema = z.object({
     branch: z.string(),
     collegeName: z.string(),
     name: z.string(),
-    phoneNumber: z.string().max(10, "Phone Number cannot be more than 10 digits"),
+    phoneNumber: z.string().length(10, "Phone Number should be of 10 digits"),
     cgpa: z.number(),
     yearOfExperience: z.number(),
     currentCompany: z.string(),
@@ -27,7 +28,9 @@ export const alumniSignUpSchema = z.object({
     isOpenToTakeMentorshipSession: z.enum(["Yes", "No"]),
     linkedinProfileUrl: z.url(),
     portfolioLink: z.url().optional(),
-    profilePhoto: z.any()
+    profilePhoto: z.any(),
+    rollNo: z.string(),
+    currentPosition: z.string(),
 });
 
 export const adminSignUpSchema = z.object({

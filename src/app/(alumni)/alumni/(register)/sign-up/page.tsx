@@ -59,7 +59,8 @@ export default function AlumniSignUpPage () {
             branch: "",
             course: "BTECH",
             password: "",
-            profilePhoto: undefined
+            profilePhoto: undefined,
+            rollNo: "",
         }
     });
 
@@ -100,6 +101,7 @@ export default function AlumniSignUpPage () {
             formData.append("branch", data.branch);
             formData.append("course", data.course);
             formData.append("password", data.password);
+            formData.append("rollNo", data.rollNo);
 
             if (data.profilePhoto) {
             formData.append("profilePhoto", data.profilePhoto);
@@ -135,6 +137,7 @@ export default function AlumniSignUpPage () {
                 course: "BTECH",
                 password: "",
                 profilePhoto: undefined,
+                rollNo: "",
             });
         }
     }
@@ -193,6 +196,22 @@ export default function AlumniSignUpPage () {
                                 <FormControl>
                                     <Input 
                                     type="password"
+                                    {...field}
+                                    />
+                                </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                    <FormField
+                    name="rollNo"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>College Roll No</FormLabel>
+                                <FormControl>
+                                    <Input 
+                                    type="text"
                                     {...field}
                                     />
                                 </FormControl>
