@@ -38,6 +38,12 @@ enum Role {
   ADMIN
 }
 
+enum Mode {
+  ONLINE
+  OFFLINE
+  HYBRID
+}
+
 model User {
   id                String   @id @default(cuid())
   email             String   @unique
@@ -99,6 +105,21 @@ model Admin {
   user           User     @relation(fields: [userId], references: [id])
   userId         String   @unique
   collegeLogo    String
+  events         Event[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Event {
+  id             String   @id @default(cuid())
+  title          String
+  place          String
+  time           DateTime
+  description    String?
+  eventBannerUrl String?
+  mode           Mode
+  createdBy      Admin    @relation(fields: [adminId], references: [id])
+  adminId        String
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
