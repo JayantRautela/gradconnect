@@ -60,6 +60,8 @@ export default async function POST (request: Request) {
             }
         });
 
+        // add queue to send email to all alumni
+
         return Response.json({
             success: true,
             message: "Event created successfully",
