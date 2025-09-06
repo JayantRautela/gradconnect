@@ -1,21 +1,21 @@
-import defaultEventImage from "@/assets/default-event.jpg";
 import { Calendar } from "lucide-react";
 
 interface EventCardProps {
-  eventBanner?: string;
+  eventBannerUrl?: string;
   title: string;
   place: string;
   time: string;
+  mode: string
 }
 
-export default function EventCard ({ eventBanner, title, place, time }: EventCardProps) {
+export default function EventCard ({ eventBannerUrl, title, place, time, mode }: EventCardProps) {
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-sm">
       <div className="aspect-video w-full overflow-hidden">
         {
-          eventBanner ? (
+          eventBannerUrl ? (
             <img
-              src={eventBanner}
+              src={eventBannerUrl}
               alt={title}
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
             />
@@ -44,6 +44,7 @@ export default function EventCard ({ eventBanner, title, place, time }: EventCar
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span className="text-sm font-medium">{time}</span>
+            <span className="text-sm font-medium">{mode}</span>
           </div>
         </div>
       </div>
