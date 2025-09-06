@@ -1,4 +1,4 @@
-import { Course } from "@prisma/client";
+import { Course, Mode } from "@prisma/client";
 
 export interface AdminSignUpResponse {
     success: boolean;
@@ -97,4 +97,23 @@ export interface GetAlumniResponse {
     success: boolean;
     message: string;
     alumni?: Alumni[];
+}
+
+export interface Event {
+    id: string;
+    place: string;
+    time: Date
+    title: string;
+    description?: string;
+    eventBannerUrl?: string;
+    mode: Mode;
+    createdAt: Date;
+    createdBy: Admin;
+}
+
+export interface EventResponse {
+    success: boolean;
+    message: string;
+    pastEvents?: Event[];
+    upcomingEvents?: Event[];
 }
