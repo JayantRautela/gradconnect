@@ -1,19 +1,37 @@
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 
-export default async function GET(request: Request) {
+export async function GET(request: Request) {
     try {
         const session = await getServerSession();
-        const admin = session?.user.admin;
 
-        if (!admin) {
-        return Response.json({ 
-            success: false, 
-            message: "Unauthorized" 
-        },
-        { 
-            status: 403 
+        if (!session?.user?.email) {
+            return Response.json({
+                success: false,
+                message: "Unauthorized"
+            }, 
+            {
+                status: 401
+            });
+        }
+
+        const admin = await prisma.user.findUnique({
+            where: {
+                email: session.user.email
+            }, 
+            include: {
+                admin: true
+            }
         });
+
+        if (!admin?.admin) {
+            return Response.json({ 
+                success: false, 
+                message: "Admin not found" 
+            },
+            { 
+                status: 404 
+            });
         }
 
         const now = new Date();
