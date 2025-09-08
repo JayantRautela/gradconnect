@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { EventResponse, Event } from "@/types/ApiResponse";
 import axios, { AxiosError } from "axios";
 import { Loader2, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -12,6 +13,7 @@ export default function EventsPage () {
     const [isLoading, setIsLoading] = useState(false);
     const [upcomingEvents, setUpcomingEvents] = useState<Event[]>();
     const [pastEvents, setPastEvents] = useState<Event[]>();
+    const router = useRouter();
 
     useEffect(() => {
         const fetchEvent = async () => {
@@ -32,6 +34,10 @@ export default function EventsPage () {
         };
         fetchEvent();
     }, [])
+
+    const redirectToEventDetailsPage = (id: string) => {
+        router.push(`/admin/dashboard/events/${id}`);
+    };
 
     return (
         <div className="space-y-6">
@@ -69,6 +75,7 @@ export default function EventsPage () {
                                                         place={event.place}
                                                         time={event.time.toLocaleDateString()}
                                                         mode={event.mode}
+                                                        onClick={() => redirectToEventDetailsPage(event.id)}
                                                     />
                                                 ))
                                             }
@@ -93,6 +100,7 @@ export default function EventsPage () {
                                                         place={event.place}
                                                         time={event.time.toLocaleDateString()}
                                                         mode={event.mode}
+                                                        onClick={() => redirectToEventDetailsPage(event.id)}
                                                     />
                                                 ))
                                             }

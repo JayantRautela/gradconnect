@@ -1,14 +1,16 @@
-import { Calendar } from "lucide-react";
+import { Calendar, Eye } from "lucide-react";
+import { Button } from "./ui/button";
 
 interface EventCardProps {
   eventBannerUrl?: string;
   title: string;
   place: string;
   time: string;
-  mode: string
+  mode: string;
+  onClick: (id: string) => void;
 }
 
-export default function EventCard ({ eventBannerUrl, title, place, time, mode }: EventCardProps) {
+export default function EventCard ({ eventBannerUrl, title, place, time, mode, onClick }: EventCardProps) {
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-sm">
       <div className="aspect-video w-full overflow-hidden">
@@ -47,6 +49,10 @@ export default function EventCard ({ eventBannerUrl, title, place, time, mode }:
             <span className="text-sm font-medium">{mode}</span>
           </div>
         </div>
+        <Button variant={"outline"} onClick={() => onClick()}>
+          <Eye />
+          View Details
+        </Button>
       </div>
     </div>
   );
