@@ -58,33 +58,34 @@ model User {
 }
 
 model Student {
-  id                String   @id @default(cuid())
-  name              String
-  course            Course
-  branch            String
-  verifyCode        String
-  isVerified        Boolean  @default(false)
-  currentYear       Year
-  collegeName       String
-  rollNo            String
-  ProfilePictureUrl String?
-  user              User     @relation(fields: [userId], references: [id])
-  userId            String   @unique
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id                 String               @id @default(cuid())
+  name               String
+  course             Course
+  branch             String
+  verifyCode         String
+  isVerified         Boolean              @default(false)
+  currentYear        Year
+  collegeName        String
+  rollNo             String
+  ProfilePictureUrl  String?
+  user               User                 @relation(fields: [userId], references: [id])
+  userId             String               @unique
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  sessionParticipant SessionParticipant[]
 }
 
 model Alumni {
-  id                            String   @id @default(cuid())
+  id                            String       @id @default(cuid())
   name                          String
-  phoneNumber                   String   @unique
+  phoneNumber                   String       @unique
   cgpa                          Decimal
   collegeName                   String
   currentCompany                String
   yearOfExperience              Decimal
   passoutYear                   Int
   isOpenToTakeMentorshipSession Boolean
-  isVerified                    Boolean  @default(false)
+  isVerified                    Boolean      @default(false)
   linkedinProfileUrl            String
   portfolioLink                 String?
   ProfilePictureUrl             String?
@@ -92,10 +93,11 @@ model Alumni {
   course                        Course
   currentPosition               String
   rollNo                        String
-  user                          User     @relation(fields: [userId], references: [id])
-  userId                        String   @unique
-  createdAt                     DateTime @default(now())
-  updatedAt                     DateTime @updatedAt
+  mentorhsipSessions            Mentorship[]
+  user                          User         @relation(fields: [userId], references: [id])
+  userId                        String       @unique
+  createdAt                     DateTime     @default(now())
+  updatedAt                     DateTime     @updatedAt
 }
 
 model Admin {
@@ -122,4 +124,25 @@ model Event {
   adminId        String
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+}
+
+model Mentorship {
+  id           String               @id @default(cuid())
+  createdBy    Alumni               @relation(fields: [alumniId], references: [id])
+  alumniId     String
+  meetingUrl   String
+  time         String
+  title        String
+  participants SessionParticipant[]
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+}
+
+model SessionParticipant {
+  id        String     @id @default(uuid())
+  sessionId String
+  userId    String
+  session   Mentorship @relation(fields: [sessionId], references: [id])
+  user      Student    @relation(fields: [userId], references: [id])
+  joinedAt  DateTime   @default(now())
 }
