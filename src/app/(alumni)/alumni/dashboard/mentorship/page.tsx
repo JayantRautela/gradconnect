@@ -1,6 +1,7 @@
+'use client';
 import { Button } from "@/components/ui/button";
 import { Loader2, Plus } from "lucide-react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 
@@ -9,7 +10,7 @@ export default function MentorhsipPage () {
     const router = useRouter();
 
     const addEvent = () => {
-        router.push('/alumni/dashboard/mentorship-sessions/add');
+        router.push('/alumni/dashboard/mentorship/add');
     }
 
     return (

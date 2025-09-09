@@ -61,6 +61,7 @@ export default function AlumniSignUpPage () {
             password: "",
             profilePhoto: undefined,
             rollNo: "",
+            currentPosition: ""
         }
     });
 
@@ -102,6 +103,7 @@ export default function AlumniSignUpPage () {
             formData.append("course", data.course);
             formData.append("password", data.password);
             formData.append("rollNo", data.rollNo);
+            formData.append("currentPosition", data.currentPosition);
 
             if (data.profilePhoto) {
             formData.append("profilePhoto", data.profilePhoto);
@@ -138,6 +140,7 @@ export default function AlumniSignUpPage () {
                 password: "",
                 profilePhoto: undefined,
                 rollNo: "",
+                currentPosition: ""
             });
         }
     }
@@ -309,6 +312,23 @@ export default function AlumniSignUpPage () {
                             )}
                         />
                         <FormField
+                            name="currentPosition"
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Current Position</FormLabel>
+                                        <FormControl>
+                                            <Input  
+                                            type="text"
+                                            {...field}
+                                            />
+                                        </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <FormField
                             name="yearOfExperience"
                             control={form.control}
                             render={({ field }) => (
@@ -326,7 +346,6 @@ export default function AlumniSignUpPage () {
                                 </FormItem>
                             )}
                         />
-                    </div>
                     <FormField 
                         name="isOpenToTakeMentorshipSession"
                         control={form.control}

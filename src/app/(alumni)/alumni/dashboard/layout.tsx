@@ -29,7 +29,7 @@ const sidebarItems = [
 //   },
     {
         title: "Mentorship",
-        href: "/alumni/dashboard/mentorship-sessions",
+        href: "/alumni/dashboard/mentorship",
         icon: Calendar
     },
     {

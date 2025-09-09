@@ -26,9 +26,11 @@ export async function POST (request: Request) {
         const currentYear = formData.get("currentYear") as Year;
         const rollNo = formData.get("rollNo") as string;
 
+        const normalizedCollege = collegeName.trim().toLowerCase();
+
         const admin = await prisma.admin.findFirst({
             where: {
-                CollegeName: collegeName
+                CollegeName: normalizedCollege
             },
             select: { 
                 acceptedDomain: true 

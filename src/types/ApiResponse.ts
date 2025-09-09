@@ -117,3 +117,8 @@ export interface EventResponse {
     pastEvents?: Event[];
     upcomingEvents?: Event[];
 }
+
+export interface MentroshipResponse {
+    success: boolean;
+    message: string;
+}
