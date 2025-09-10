@@ -27,7 +27,13 @@ export async function middleware(request: NextRequest) {
         url.pathname.startsWith('/admin/sign-up') ||
         url.pathname === '/')
     ) {
-        return NextResponse.redirect(new URL('/feed', request.url));
+        // return NextResponse.redirect(new URL('/feed', request.url));
+        if (token.role === "ALUMNI") {
+            return NextResponse.redirect(new URL('/alumni/dashboard', request.url));
+        }
+        if (token.role === "STUDENT") {
+            return NextResponse.redirect(new URL('/student/dashboard', request.url));
+        }
     }
 
     if (!token && (
