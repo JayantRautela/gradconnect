@@ -82,8 +82,8 @@ export default function AddMentorshipSession () {
                             <FormLabel>Title</FormLabel>
                                 <FormControl>
                                     <Input 
-                                    placeholder="john10@abc.com"
-                                    type="test"
+                                    placeholder="Resume Review"
+                                    type="text"
                                     {...field} 
                                     />
                                 </FormControl>
@@ -116,8 +116,9 @@ export default function AddMentorshipSession () {
                             <FormLabel>Time</FormLabel>
                                 <FormControl>
                                     <Input 
-                                    type="text"
+                                    type="datetime-local"
                                     {...field}
+                                    onChange={(e) => field.onChange(e.target.value)}
                                     />
                                 </FormControl>
                             <FormMessage />
@@ -133,7 +134,9 @@ export default function AddMentorshipSession () {
                                 <FormControl>
                                     <Input 
                                     type="number"
+                                    min={1}
                                     {...field}
+                                    onChange={(e) => field.onChange(+e.target.value)}
                                     />
                                 </FormControl>
                             <FormMessage />
