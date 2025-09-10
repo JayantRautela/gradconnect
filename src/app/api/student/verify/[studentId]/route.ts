@@ -2,14 +2,20 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(request: Request, { params }: { params: { studentId: string }}) {
     try {
+        // const studentId = params.studentId;
+        const { studentId } = await params;
         const { otp } = await request.json();
-        const studentId = params.studentId;
+        console.log(studentId);
 
-        const student = await prisma.student.findUnique({
+        const student = await prisma.user.findUnique({
             where: {
                 id: studentId
+            },
+            include: {
+                student: true
             }
         });
+
 
         if (!student) {
             return Response.json({
@@ -21,7 +27,7 @@ export async function POST(request: Request, { params }: { params: { studentId: 
             });
         }
 
-        const verifyCode = student.verifyCode;
+        const verifyCode = student.student?.verifyCode;
 
         const isOtpCorrect = verifyCode === otp;
 
@@ -37,7 +43,7 @@ export async function POST(request: Request, { params }: { params: { studentId: 
 
         await prisma.student.update({
             where: {
-                id: studentId
+                id: student.student?.id
             },
             data: {
                 isVerified: true,
