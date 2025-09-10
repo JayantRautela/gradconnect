@@ -84,9 +84,12 @@ export default function Login () {
         const { data: session } = await axios.get<SessionResponse>("/api/auth/session");
         if (session?.user?.role === "ADMIN") {
           router.replace('/admin/dashboard');
-        } else if (session?.user?.role === "ALUMNI" || session?.user?.role === "STUDENT") {
-          router.replace('/feed');
-        } else {
+        } else if (session?.user?.role === "STUDENT") {
+          router.replace('/student/dashboard');
+        } else if (session?.user?.role === "ALUMNI" ) {
+          router.replace('/alumni/dashboard');
+        } 
+        else {
           router.replace('/');
         }
 

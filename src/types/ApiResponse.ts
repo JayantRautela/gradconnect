@@ -1,4 +1,4 @@
-import { Course, Mode } from "@prisma/client";
+import { Course, Mode, Year } from "@prisma/client";
 
 export interface AdminSignUpResponse {
     success: boolean;
@@ -121,4 +121,29 @@ export interface EventResponse {
 export interface MentroshipResponse {
     success: boolean;
     message: string;
+}
+
+export interface Student {
+    id: string;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+    course: Course;
+    branch: string;
+    verifyCode: string;
+    isVerified: boolean;
+    currentYear: Year;
+    collegeName: string;
+    rollNo: string;
+    ProfilePictureUrl: string | null;
+    userId: string;
+    user : {
+        email: string;
+    }
+}
+
+export interface StudentDetailsResponse {
+    success: boolean;
+    message: string;
+    student?: Student;
 }
