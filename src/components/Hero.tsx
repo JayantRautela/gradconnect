@@ -1,6 +1,9 @@
+'use client';
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
+  const router = useRouter();
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50 py-16 sm:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,6 +28,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 className="bg-blue-500 hover:bg-blue-600 text-white cursor-pointer px-8 py-3 text-lg"
+                onClick={() => router.push('/sign-in')}
               >
                 Join the Network
               </Button>
