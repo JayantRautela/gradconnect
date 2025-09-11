@@ -55,7 +55,8 @@ export async function GET (request: NextRequest) {
         const alumni = await prisma.alumni.findMany({
             where: {
                 passoutYear: Number(passoutYear),
-                collegeName: admin.admin.CollegeName
+                collegeName: admin.admin.CollegeName,
+                // isVerified: true
             },
             include: {
                 user: {
