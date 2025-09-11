@@ -24,7 +24,7 @@ export async function GET (request: NextRequest) {
         return NextResponse.json({ 
             success: true,
             message: "passout year fetched",
-            years: courses.map((y) => y.course) 
+            courses: courses.map((y) => y.course) 
         }, 
         {
             status: 200

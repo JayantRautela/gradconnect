@@ -93,10 +93,22 @@ export interface GetPassoutYearsResponse {
     years?: number[];
 }
 
+export interface GetCourseResponse { 
+    success: boolean;
+    message: string;
+    courses?: Course[];
+}
+
 export interface GetAlumniResponse {
     success: boolean;
     message: string;
     alumni?: Alumni[];
+}
+
+export interface GetStudentResponse {
+    success: boolean;
+    message: string;
+    student?: Student[];
 }
 
 export interface Event {
