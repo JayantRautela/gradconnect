@@ -1,16 +1,17 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST (request: Request, { params }: { params: { id: string}}) {
+export async function POST (request: NextRequest, context: { params: Promise<{ id: string }> }) {
     try {
-        const id = params.id;
+        const { id } = await context.params;
 
         const session = await getServerSession(authOptions);
         const student = session?.user.student;
 
         if (!student) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Unauthorized"
             }, 
@@ -29,7 +30,7 @@ export async function POST (request: Request, { params }: { params: { id: string
         });
 
         if (!mentorshipSession) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Mentorship session not found"
             }, 
@@ -39,7 +40,7 @@ export async function POST (request: Request, { params }: { params: { id: string
         }
 
         if (mentorshipSession.participants.length >= mentorshipSession.maxParticipant) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Session is full"
             }, 
@@ -56,7 +57,7 @@ export async function POST (request: Request, { params }: { params: { id: string
         });
 
         // send session link to email
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Event link shared",
             link: mentorshipSession.meetingUrl
@@ -66,7 +67,7 @@ export async function POST (request: Request, { params }: { params: { id: string
         });
     } catch (error) {
         console.error(`Error in joining :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error in joining"
         }, 

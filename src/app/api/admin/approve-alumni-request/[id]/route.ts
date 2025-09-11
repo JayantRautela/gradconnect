@@ -1,11 +1,12 @@
 import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH (request: Request, { params }: { params: { id: string }}) {
+export async function PATCH (request: NextRequest, context: { params: Promise<{ id: string }> }) {
     try {
-        const id = params.id;
+        const { id } = await context.params;
 
         if (!id) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Alumni ID is required"
             }, 
@@ -21,7 +22,7 @@ export async function PATCH (request: Request, { params }: { params: { id: strin
         });
 
         if (!alumni) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Alumni not found"
             }, 
@@ -42,7 +43,7 @@ export async function PATCH (request: Request, { params }: { params: { id: strin
             }
         });
 
-        return Response.json({
+        return NextResponse.json({
             success: true,
             message: "Alumni verified and sucessfully added",
             data: updatedAlumni
@@ -52,7 +53,7 @@ export async function PATCH (request: Request, { params }: { params: { id: strin
         });
     } catch (error) {
         console.error(`Error in updating verification status :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error in updating verification status"
         },
@@ -62,12 +63,12 @@ export async function PATCH (request: Request, { params }: { params: { id: strin
     }
 }
 
-export async function DELETE (request: Request, { params }: { params: { id: string}}) {
+export async function DELETE (request: NextRequest, context: { params: Promise<{ id: string }> }) {
     try {
-        const id = params.id;
+        const { id } = await context.params;
 
         if (!id) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Alumni ID is required"
             }, 
@@ -86,7 +87,7 @@ export async function DELETE (request: Request, { params }: { params: { id: stri
         });
 
         if (!alumni) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Alumni not found"
             }, 
@@ -101,7 +102,7 @@ export async function DELETE (request: Request, { params }: { params: { id: stri
             }
         })
 
-        return Response.json({
+        return NextResponse.json({
             success: true,
             message: "Alumni request rejected and deleted",
             data: deletedAlumni
@@ -111,7 +112,7 @@ export async function DELETE (request: Request, { params }: { params: { id: stri
         });
     } catch (error) {
         console.error(`Error in updating verification status :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error in updating verification status"
         },

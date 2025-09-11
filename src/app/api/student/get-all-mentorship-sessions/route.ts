@@ -1,14 +1,15 @@
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
+import { NextResponse, NextRequest } from "next/server";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
         const student = session?.user.student;
 
         if (!student) {
-        return Response.json(
+        return NextResponse.json(
             { success: false, message: "Student not found" },
             { status: 404 }
         );
@@ -34,7 +35,7 @@ export async function GET(request: Request) {
         },
         });
 
-        return Response.json(
+        return NextResponse.json(
         {
             success: true,
             message: "Upcoming mentorship sessions fetched successfully",
@@ -44,7 +45,7 @@ export async function GET(request: Request) {
         );
     } catch (error) {
         console.error(`Error in fetching student mentorship sessions :- ${error}`);
-        return Response.json(
+        return NextResponse.json(
         { success: false, message: "Error in fetching mentorship sessions" },
         { status: 500 }
         );

@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
 
-export async function GET (request: Request) {
+export async function GET (request: NextRequest) {
     try {
         const years = await prisma.alumni.findMany({
             distinct: ["passoutYear"],
@@ -14,7 +15,7 @@ export async function GET (request: Request) {
         });
 
         if (years.length === 0) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "No alumni found"
             }, 
@@ -23,7 +24,7 @@ export async function GET (request: Request) {
             }); 
         }
 
-        return Response.json({ 
+        return NextResponse.json({ 
             success: true,
             message: "passout year fetched",
             years: years.map((y) => y.passoutYear) 
@@ -33,7 +34,7 @@ export async function GET (request: Request) {
         });
     } catch (error) {
         console.error(`Error in fetching passout year :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error in fetching passout year"
         }, 

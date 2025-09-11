@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { Course, Prisma } from "@prisma/client";
 import { v2 as cloudinary } from "cloudinary";
+import { NextRequest, NextResponse } from "next/server";
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
@@ -10,7 +11,7 @@ cloudinary.config({
 });
 
 
-export async function POST (request: Request) {
+export async function POST (request: NextRequest) {
     try { 
         // cgpa is decimal
         // isOpenToTakeMentorshipSession is a radio group
@@ -41,7 +42,7 @@ export async function POST (request: Request) {
         const normalizedCollegeName = collegeName.trim().toLowerCase();
 
         if (passoutYear > new Date().getFullYear()) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Invalid Passout Year"
             }, 
@@ -57,7 +58,7 @@ export async function POST (request: Request) {
         });
 
         if (!admin) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "College Does not exists"
             }, 
@@ -74,7 +75,7 @@ export async function POST (request: Request) {
 
 
         if (alumni) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Almuni already exists"
             },
@@ -129,7 +130,7 @@ export async function POST (request: Request) {
             },
         });
 
-        return Response.json({
+        return NextResponse.json({
             success: true,
             message: "Your request is initiated, wait for admin to approve"
         }, 
@@ -138,7 +139,7 @@ export async function POST (request: Request) {
         });
     } catch (error) {
         console.error(`Error in registering ALMUNI :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error in registering ALMUNI"
         }, 

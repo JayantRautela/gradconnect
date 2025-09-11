@@ -1,14 +1,15 @@
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET (request: Request) {
+export async function GET (request: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
         const alumni = session?.user.alumni;
 
         if (!alumni) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Alumni not found"
             }, 
@@ -37,7 +38,7 @@ export async function GET (request: Request) {
             orderBy: { time: "desc" },
         });
 
-        return Response.json({
+        return NextResponse.json({
             success: true,
             message: "Mentorship sessions fetched successfully",
             upcoming: upcomingSessions,
@@ -48,7 +49,7 @@ export async function GET (request: Request) {
         });
     } catch (error) {
         console.error(`Error in fetching mentorship sessions :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error in fetching mentorship sessions"
         }, 

@@ -1,11 +1,12 @@
 import { prisma } from "@/lib/prisma";
+import { NextResponse, NextRequest } from "next/server";
 
-export async function POST (request: Request) {
+export async function POST (request: NextRequest) {
     try {
         const { email } = await request.json();
 
         if (!email) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Email is required"
             },
@@ -21,7 +22,7 @@ export async function POST (request: Request) {
         });
 
         if (!user) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "User not found"
             }, 
@@ -44,7 +45,7 @@ export async function POST (request: Request) {
         
         //send otp for reset password to email.
 
-        return Response.json({
+        return NextResponse.json({
             success: true,
             message: "Reset Password Code sent to email"
         }, 
@@ -53,7 +54,7 @@ export async function POST (request: Request) {
         });
     } catch (error) {
         console.error(`Error in forgot password :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error in forgot password"
         },

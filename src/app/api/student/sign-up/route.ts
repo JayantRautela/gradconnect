@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { Course, Year } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { v2 as cloudinary } from "cloudinary";
+import { NextResponse, NextRequest } from "next/server";
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
@@ -9,7 +10,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET!,
 });
 
-export async function POST (request: Request) {
+export async function POST (request: NextRequest) {
     try {
         // course is going to be a radio group
         // current year is also going to be a radio group
@@ -38,7 +39,7 @@ export async function POST (request: Request) {
         });
 
         if (!admin) {
-            return Response.json({ 
+            return NextResponse.json({ 
                 success: false, 
                 message: "College Not Found" 
             }, 
@@ -50,7 +51,7 @@ export async function POST (request: Request) {
         const acceptedDomain = admin.acceptedDomain;
 
         if (!email.toLowerCase().endsWith(`@${acceptedDomain.trim().toLowerCase()}`)) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Invalid Email. Enter your official College Email Id"
             },
@@ -64,7 +65,7 @@ export async function POST (request: Request) {
         });
 
         if (existingUser) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Student with email already exists"
             },
@@ -124,7 +125,7 @@ export async function POST (request: Request) {
         })
     } catch (error) {
         console.error(`Error in registering student :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error registering student"
         },

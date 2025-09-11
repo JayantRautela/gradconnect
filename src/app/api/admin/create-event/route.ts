@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { Mode } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { v2 as cloudinary } from "cloudinary";
+import { NextRequest, NextResponse } from "next/server";
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
@@ -9,13 +10,13 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET!,
 });
 
-export default async function POST (request: Request) {
+export async function POST (request: NextRequest) {
     try {
         const session = await getServerSession();
         const admin = session?.user.admin;
 
         if (!admin) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Unauthorized"
             },
@@ -62,7 +63,7 @@ export default async function POST (request: Request) {
 
         // add queue to send email to all alumni
 
-        return Response.json({
+        return NextResponse.json({
             success: true,
             message: "Event created successfully",
             event: event
@@ -72,7 +73,7 @@ export default async function POST (request: Request) {
         });
     } catch (error) {
         console.error(`Error in creating event :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error in creating event"
         }, 

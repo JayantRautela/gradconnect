@@ -1,13 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET (request: Request) {
+export async function GET (request: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
 
         if (!session?.user?.email) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Unauthorized"
             }, 
@@ -26,7 +27,7 @@ export async function GET (request: Request) {
         });
 
         if (!admin?.admin) {
-            return Response.json(
+            return NextResponse.json(
             { 
                 success: false, 
                 message: "Admin not found" 
@@ -42,7 +43,7 @@ export async function GET (request: Request) {
         const passoutYear = searchParams.get("passoutYear"); 
 
         if (!passoutYear) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Passout Year is required"
             },
@@ -66,7 +67,7 @@ export async function GET (request: Request) {
             }
         });
 
-        return Response.json({
+        return NextResponse.json({
             success: true,
             message: "Alumni fetched successfully",
             alumni: alumni
@@ -76,7 +77,7 @@ export async function GET (request: Request) {
         });
     } catch (error) {
         console.error(`Error in fetching alumnis :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error in fetching alumnis"
         },

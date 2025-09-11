@@ -1,15 +1,16 @@
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
+import { NextResponse, NextRequest } from "next/server";
 
 // POST reuqest to check the OTP
 // PATCH request to change the password
 
-export async function POST (request: Request) {
+export async function POST (request: NextRequest) {
     try {
         const { email, otp } = await request.json();
 
         if (!email || !otp) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "All fields are required"
             },
@@ -25,7 +26,7 @@ export async function POST (request: Request) {
         });
 
         if (!user) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "User not found"
             },
@@ -35,7 +36,7 @@ export async function POST (request: Request) {
         }
 
         if (user.resetPasswordCode !== otp) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Inncorrect OTP"
             },
@@ -44,7 +45,7 @@ export async function POST (request: Request) {
             });
         }
 
-        return Response.json({
+        return NextResponse.json({
             success: true,
             message: "OTP verified, you can change your password"
         },
@@ -53,7 +54,7 @@ export async function POST (request: Request) {
         });
     } catch (error) {
         console.error(`Error in Checking OTP :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error in Checking OTP"
         },
@@ -68,7 +69,7 @@ export async function PATCH (request: Request) {
         const { email, password } = await request.json();
 
         if (!email || !password) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "All fields are required"
             },
@@ -84,7 +85,7 @@ export async function PATCH (request: Request) {
         });
 
         if (!user) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "User not found"
             },
@@ -104,7 +105,7 @@ export async function PATCH (request: Request) {
             }
         });
 
-        return Response.json({
+        return NextResponse.json({
             success: true,
             message: "Password changed successfully"
         },
@@ -113,7 +114,7 @@ export async function PATCH (request: Request) {
         });
     } catch (error) {
         console.error(`Error in Reseting Password :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error in Reseting Password"
         },

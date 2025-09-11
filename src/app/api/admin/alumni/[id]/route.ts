@@ -1,14 +1,17 @@
 import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET (request: Request, { params }: { params: { id: string }}) {
+export async function GET (request: NextRequest, context: { params: Promise<{ id: string }> }) {
     try {
         // example request :- /api/admin/alumni/[id] 
         // this is when the admin after clicking on the passout card on the dashboard again clicks on the alumni so this route to get ther data.
         // and also when the admin wants to see the details of the alumni while approving the request.
-        const alumniId = params.id;
+        // const alumniId = params.id;
+        const { id } = await context.params;
+        const alumniId = id;
 
         if (!alumniId) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "ALumni ID is required"
             }, 
@@ -31,7 +34,7 @@ export async function GET (request: Request, { params }: { params: { id: string 
         });
 
         if (!alumni) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Alumni not found"
             },
@@ -40,7 +43,7 @@ export async function GET (request: Request, { params }: { params: { id: string 
             });
         }
 
-        return Response.json({
+        return NextResponse.json({
             success: true,
             message: "ALumni data fetched successfully",
             alumni: alumni
@@ -50,7 +53,7 @@ export async function GET (request: Request, { params }: { params: { id: string 
         })
     } catch (error) {
         console.error(`Error in fetching alumni data :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error in fetching alumni data"
         }, 

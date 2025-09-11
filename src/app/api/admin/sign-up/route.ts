@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { v2 as cloudinary } from "cloudinary";
+import { NextRequest, NextResponse } from "next/server";
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
@@ -8,7 +9,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET!,
 });
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
         const form = await request.formData();
 
@@ -26,7 +27,7 @@ export async function POST(request: Request) {
         });
 
         if (college) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "College already exists"
             }, 
@@ -69,7 +70,7 @@ export async function POST(request: Request) {
             }
         });
 
-        return Response.json({
+        return NextResponse.json({
             success: true,
             message: "College Registered Successfully"
         }, 
@@ -78,7 +79,7 @@ export async function POST(request: Request) {
         });
     } catch (error) {
         console.error(`Error registering ADMIN :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error registering ADMIN"
         }, 

@@ -1,14 +1,15 @@
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
+import { NextResponse, NextRequest } from "next/server";
 
-export async function GET (request: Request) {
+export async function GET (request: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
         const user = session?.user.alumni;
 
         if (!user) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Not Authenticated"
             }, 
@@ -32,7 +33,7 @@ export async function GET (request: Request) {
         });
 
         if (!alumni) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "alumni not found"
             }, 
@@ -41,7 +42,7 @@ export async function GET (request: Request) {
             });
         }
 
-        return Response.json({
+        return NextResponse.json({
             success: true,
             message: "alumni profile fetched sucessfully",
             alumni,
@@ -51,7 +52,7 @@ export async function GET (request: Request) {
         });
     } catch (error) {
         console.error(`Error fetching alumni profile :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error fetching alumni profile"
         }, 

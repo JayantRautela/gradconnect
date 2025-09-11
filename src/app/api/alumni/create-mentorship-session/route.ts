@@ -1,8 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
+import { NextResponse, NextRequest } from "next/server";
 
-export async function POST (request: Request) {
+export async function POST (request: NextRequest) {
     try {
         const { meetingUrl, time, title, maxParticipant } = await request.json();
 
@@ -10,7 +11,7 @@ export async function POST (request: Request) {
         const alumni = session?.user.alumni;
 
         if (!alumni) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Unauthenticated"
             }, 
@@ -29,7 +30,7 @@ export async function POST (request: Request) {
             }
         });
 
-        return Response.json({
+        return NextResponse.json({
             success: true,
             message: "Mentorship session created successfully",
             mentorshipSession
@@ -39,7 +40,7 @@ export async function POST (request: Request) {
         });
     } catch (error) {
         console.error(`Error creating mentorship session :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error creating mentorship session"
         }, 

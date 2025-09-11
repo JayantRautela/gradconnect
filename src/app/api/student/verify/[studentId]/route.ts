@@ -1,9 +1,11 @@
 import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: Request, { params }: { params: { studentId: string }}) {
+export async function POST(request: NextRequest, context: { params: Promise<{ studentId: string }> }) {
     try {
         // const studentId = params.studentId;
-        const { studentId } = await params;
+        const { studentId } = await context.params;
+
         const { otp } = await request.json();
         console.log(studentId);
 
@@ -18,7 +20,7 @@ export async function POST(request: Request, { params }: { params: { studentId: 
 
 
         if (!student) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Student not found"
             },
@@ -32,7 +34,7 @@ export async function POST(request: Request, { params }: { params: { studentId: 
         const isOtpCorrect = verifyCode === otp;
 
         if (!isOtpCorrect) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: "Incorrect OTP"
             },
@@ -50,7 +52,7 @@ export async function POST(request: Request, { params }: { params: { studentId: 
             }
         });
 
-        return  Response.json({
+        return  NextResponse.json({
             success: true,
             message: "Student registered successfully"
         },
@@ -59,7 +61,7 @@ export async function POST(request: Request, { params }: { params: { studentId: 
         });
     } catch (error) {
         console.error(`Error in verifying student :- ${error}`);
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: "Error verifying student"
         },
