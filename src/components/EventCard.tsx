@@ -7,7 +7,7 @@ interface EventCardProps {
   place: string;
   time: string;
   mode: string;
-  onClick: (id: string) => void;
+  onClick: () => void;
 }
 
 export default function EventCard ({ eventBannerUrl, title, place, time, mode, onClick }: EventCardProps) {
@@ -49,7 +49,7 @@ export default function EventCard ({ eventBannerUrl, title, place, time, mode, o
             <span className="text-sm font-medium">{mode}</span>
           </div>
         </div>
-        <Button variant={"outline"} onClick={() => onClick()}>
+        <Button variant={"outline"} onClick={onClick}>
           <Eye />
           View Details
         </Button>
