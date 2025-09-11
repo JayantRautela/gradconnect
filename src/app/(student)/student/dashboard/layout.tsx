@@ -12,11 +12,11 @@ import {
 } from "lucide-react";
 
 const sidebarItems = [
-//   {
-//     title: "Alumni Directory",
-//     href: "/admin/dashboard/alumni",
-//     icon: Users,
-//   },
+  {
+    title: "Alumni Directory",
+    href: "/student/dashboard/alumni",
+    icon: Users,
+  },
 //   {
 //     title: "Pending Alumni Request",
 //     href: "/admin/dashboard/pending",

@@ -46,7 +46,7 @@ export default function AdminDashboardLayout({
 }>) {
   const pathname = usePathname();
   const { data: session } = useSession();
-  const admin = session?.user.admin;
+  const alumni = session?.user.alumni;
   return (
     <main>
         <nav className="p-4 md:p-2 shadow-md bg-gray-100">
@@ -60,7 +60,7 @@ export default function AdminDashboardLayout({
             {
               session ? (
                 <>
-                  <span className='mr-4'>Welcome, {admin?.collegeName}</span>
+                  <span className='mr-4'>Welcome, {alumni?.name}</span>
                   <Button className='w-full md:w-auto cursor-pointer' onClick={() => signOut()}>Logout</Button>
                 </>
               ) : (
