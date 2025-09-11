@@ -147,3 +147,27 @@ export interface StudentDetailsResponse {
     message: string;
     student?: Student;
 }
+
+export interface Session {
+    id: string;
+    time: string;
+    title: string;
+    createdAt: Date;
+    updatedAt: Date;
+    alumniId: string;
+    meetingUrl: string;
+    maxParticipant: number;
+    participants?: {
+        id: string;
+        userId: string;
+        sessionId: string;
+        joinedAt: Date;
+    }[]
+}
+
+export interface SessionResponse {
+    success: boolean;
+    message: string;
+    upcoming?: Session[],
+    past?: Session[],
+}

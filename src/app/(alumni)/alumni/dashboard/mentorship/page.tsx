@@ -1,13 +1,48 @@
 'use client';
 import { Button } from "@/components/ui/button";
+import { Session, SessionResponse } from "@/types/ApiResponse";
+import axios, { AxiosError } from "axios";
 import { Loader2, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import Link from "next/link";
 
 
 export default function MentorhsipPage () {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
+    const [upcomingSession, setUpcomingSession] = useState<Session[]>();
+    const [pastSession, setPastSession] = useState<Session[]>();
+
+    useEffect(() => {
+        const fetchSessions = async () => {
+            try {
+                setIsLoading(true);
+                const response = await axios.get<SessionResponse>('/api/alumni/get-mentorship-session');
+                const message = response.data.message;
+                toast.success(message);
+                setUpcomingSession(response.data.upcoming);
+                setPastSession(response.data.past);
+            } catch (error) {
+                const axiosError = error as AxiosError<SessionResponse>;
+                const message = axiosError.response?.data.message || "Some Error Occured";
+                toast.error(message);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        fetchSessions();
+    }, [])
 
     const addEvent = () => {
         router.push('/alumni/dashboard/mentorship/add');
@@ -32,6 +67,35 @@ export default function MentorhsipPage () {
                                 <Plus size={16} className="mr-2" />
                                 Add Session
                             </Button>
+                        </div>
+                        <div>
+                            <p className="text-3xl font-semibold">Upcoming Sessions</p>
+                            <div className="mt-8">
+                                {
+                                    upcomingSession?.length === 0 ? (
+                                        <div>No Upcoming Session</div>
+                                    ) : (
+                                        <div className="grid grid-cols-1 gap-2">
+                                            {
+                                                upcomingSession?.map((session) => (
+                                                    <Card key={session.id}>
+                                                        <CardHeader>
+                                                            <CardTitle>{session.title}</CardTitle>
+                                                            <CardDescription>Session Date - {new Date(session.time).toLocaleDateString()}</CardDescription>
+                                                        </CardHeader>
+                                                        <CardContent>
+                                                            <p>Created At : {new Date(session.createdAt).toLocaleDateString()}</p>
+                                                        </CardContent>
+                                                        <CardFooter>
+                                                            <p>Meeting Url - <Link href={session.meetingUrl} className="text-blue-400">{session.meetingUrl}</Link></p>
+                                                        </CardFooter>
+                                                    </Card>
+                                                ))
+                                            }
+                                        </div>
+                                    )
+                                }
+                            </div>
                         </div>
                     </>
                 )
