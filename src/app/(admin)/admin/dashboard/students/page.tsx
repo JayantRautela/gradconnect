@@ -94,7 +94,7 @@ export default function AlumniDirectory() {
   });
 
   const getAllStudentByCourse = async (course: Course) => {
-    router.push(`/admin/dashboard/student/${course}`);
+    router.push(`/admin/dashboard/students/${course}`);
   }
 
   return (
