@@ -72,7 +72,7 @@ export default function AlumniDirectory() {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get<GetCourseResponse>('/api/admin/passout-years');
+        const response = await axios.get<GetCourseResponse>('/api/admin/current-courses');
         const message = response.data.message;
         toast.success(message);
         setCourses(response.data.courses);
