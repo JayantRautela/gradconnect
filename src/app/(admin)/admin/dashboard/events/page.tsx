@@ -54,7 +54,7 @@ export default function EventsPage () {
                                 <h2 className="text-3xl font-bold text-foreground">Events</h2>
                                 <p className="text-muted-foreground">Manage and view all your events</p>
                             </div>
-                            <Button className="bg-primary hover:bg-primary/90 cursor-pointer text-primary-foreground">
+                            <Button className="bg-primary hover:bg-primary/90 cursor-pointer text-primary-foreground" onClick={() => router.push("/admin/dashboard/events/new")}>
                                 <Plus size={16} className="mr-2" />
                                 Add Event
                             </Button>

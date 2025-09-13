@@ -46,7 +46,9 @@ export async function middleware(request: NextRequest) {
     }
 
     if (url.pathname.startsWith('/api/admin') && (!url.pathname.startsWith('/api/admin/sign-up'))) {
+        console.log(token);
     if (!token || token.role !== "ADMIN") {
+        // console.log("I am throwing unauthorized")
             return NextResponse.json({ 
                     success: false, 
                     message: "Unauthorized" 

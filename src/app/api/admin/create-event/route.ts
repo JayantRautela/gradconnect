@@ -3,6 +3,7 @@ import { Mode } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { v2 as cloudinary } from "cloudinary";
 import { NextRequest, NextResponse } from "next/server";
+import { authOptions } from "../../auth/[...nextauth]/options";
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
@@ -12,10 +13,11 @@ cloudinary.config({
 
 export async function POST (request: NextRequest) {
     try {
-        const session = await getServerSession();
+        const session = await getServerSession(authOptions);
         const admin = session?.user.admin;
 
         if (!admin) {
+            console.log("I am throwing unauthorized from route");
             return NextResponse.json({
                 success: false,
                 message: "Unauthorized"
