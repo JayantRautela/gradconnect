@@ -34,7 +34,7 @@ export async function POST (request: NextRequest) {
         const time = new Date(formData.get("time") as string);
         const description = formData.get("description") as string;
         const mode = formData.get("mode") as Mode;
-        const file = formData.get("eventBanner") as File | null
+        const file = formData.get("file") as File | null
 
         let eventBannerUrl: string = "";
         if (file) {
