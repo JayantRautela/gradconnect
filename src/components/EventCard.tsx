@@ -46,10 +46,12 @@ export default function EventCard ({ eventBannerUrl, title, place, time, mode, o
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span className="text-sm font-medium">{time}</span>
-            <span className="text-sm font-medium">{mode}</span>
           </div>
         </div>
-        <Button variant={"outline"} onClick={onClick}>
+        <div className="text-left">
+          <span className="text-sm font-medium">{mode}</span>
+        </div>
+        <Button variant={"outline"} onClick={onClick} className="cursor-pointer">
           <Eye />
           View Details
         </Button>

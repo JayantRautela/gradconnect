@@ -2,6 +2,7 @@
 import EventCard from "@/components/EventCard";
 import { Button } from "@/components/ui/button";
 import { EventResponse, Event } from "@/types/ApiResponse";
+import { Separator } from "@radix-ui/react-select";
 import axios, { AxiosError } from "axios";
 import { Loader2, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -21,6 +22,8 @@ export default function EventsPage () {
                 setIsLoading(true);
                 const response = await axios.get<EventResponse>('/api/admin/get-events');
                 const message = response.data.message;
+                console.log("upcoming events : ",response.data.upcomingEvents);
+                console.log("past events : ", response.data.pastEvents);
                 toast.success(message);
                 setUpcomingEvents(response.data.upcomingEvents);
                 setPastEvents(response.data.pastEvents);
@@ -61,20 +64,23 @@ export default function EventsPage () {
                         </div>
 
                         <div>
-                            <p className="text-2xl font-semibold">Upcoming Events</p>
+                            <p className="text-2xl font-semibold mb-8">Upcoming Events</p>
+                            <Separator />
                             {
                                 upcomingEvents?.length === 0 ? (
                                     <div>No Upcoming Events</div>
                                 ) : (
-                                    <div className="space-y-4">
+                                    <div className="space-y-8">
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                                             {
                                                 upcomingEvents?.map((event) => (
                                                     <EventCard
+                                                        key={event.id}
                                                         title={event.title}
                                                         place={event.place}
-                                                        time={event.time.toLocaleDateString()}
+                                                        time={new Date(event.time).toLocaleDateString()}
                                                         mode={event.mode}
+                                                        eventBannerUrl={event.eventBannerUrl}
                                                         onClick={() => redirectToEventDetailsPage(event.id)}
                                                     />
                                                 ))

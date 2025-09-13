@@ -1,10 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextResponse, NextRequest } from "next/server";
+import { authOptions } from "../../auth/[...nextauth]/options";
 
 export async function GET(request: NextRequest) {
     try {
-        const session = await getServerSession();
+        const session = await getServerSession(authOptions);
 
         if (!session?.user?.email) {
             return NextResponse.json({
@@ -39,7 +40,7 @@ export async function GET(request: NextRequest) {
 
         const pastEvents = await prisma.event.findMany({
         where: {
-            adminId: admin.id,
+            adminId: admin.admin.id,
             time: { 
                 lt: now
             },
@@ -51,7 +52,7 @@ export async function GET(request: NextRequest) {
 
         const upcomingEvents = await prisma.event.findMany({
         where: {
-            adminId: admin.id,
+            adminId: admin.admin.id,
             time: { 
                 gte: now 
             },
