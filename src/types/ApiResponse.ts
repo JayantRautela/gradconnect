@@ -183,3 +183,9 @@ export interface SessionResponse {
     upcoming?: Session[],
     past?: Session[],
 }
+
+export interface CreateEventResponse {
+    success: boolean;
+    message: string;
+    event?: Event;
+}
