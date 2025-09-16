@@ -18,7 +18,15 @@ export async function GET (request: NextRequest) {
             });
         }
 
-        let collegeName = user.admin?.collegeName || user.student?.collegeName || "";
+        const studentId = user.student?.id;
+
+        const student = await prisma.student.findUnique({
+            where: {
+                id: studentId
+            },
+        })
+
+        const collegeName = student?.collegeName;
 
         if (!collegeName) {
             return NextResponse.json({
@@ -32,7 +40,7 @@ export async function GET (request: NextRequest) {
 
         const admin = await prisma.admin.findUnique({
             where: {
-                CollegeName: collegeName
+                CollegeName: collegeName.trim().toLowerCase()
             },
             include: {
                 events: true

@@ -15,7 +15,7 @@ declare module 'next-auth' {
             isVerified: boolean;
             currentYear: string;
             profilePictureUrl?: string;
-            collegeName: string
+            collegeName: string;
         };
 
         alumni?: {
@@ -31,6 +31,7 @@ declare module 'next-auth' {
             profilePictureUrl?: string;
             portfolioLink?: string;
             linkedinProfileUrl: string;
+            collegeName: string;
         },
 
         admin?: {
@@ -66,7 +67,7 @@ declare module 'next-auth/jwt' {
             isVerified: boolean;
             currentYear: string;
             profilePictureUrl?: string;
-            collegeName: string
+            collegeName: string;
         };
 
         alumni?: {
@@ -82,6 +83,7 @@ declare module 'next-auth/jwt' {
             profilePictureUrl?: string;
             portfolioLink?: string;
             linkedinProfileUrl: string;
+            collegeName: string
         };
 
         admin?: {
