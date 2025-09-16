@@ -130,6 +130,12 @@ export interface EventResponse {
     upcomingEvents?: Event[];
 }
 
+export interface UpcomingEventResponse {
+    success: boolean;
+    message: string;
+    events?: Event[];
+}
+
 export interface MentroshipResponse {
     success: boolean;
     message: string;

@@ -5,8 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { 
   Users, 
-  Clock, 
-  GraduationCap, 
   User,
   Calendar
 } from "lucide-react";
@@ -17,26 +15,21 @@ const sidebarItems = [
     href: "/student/dashboard/alumni",
     icon: Users,
   },
-//   {
-//     title: "Pending Alumni Request",
-//     href: "/admin/dashboard/pending",
-//     icon: Clock,
-//   },
-//   {
-//     title: "Students",
-//     href: "/admin/dashboard/students",
-//     icon: GraduationCap,
-//   },
-    {
-        title: "Mentorship",
-        href: "/student/dashboard/mentorship",
-        icon: Calendar
-    },
-    {
-        title: "Profile",
-        href: "/student/dashboard/profile",
-        icon: User,
-    },
+  {
+      title: "Mentorship",
+      href: "/student/dashboard/mentorship",
+      icon: Calendar
+  },
+  {
+      title: "Profile",
+      href: "/student/dashboard/profile",
+      icon: User,
+  },
+  {
+    title: "Events",
+    href: "/student/dashboard/events",
+    icon: Calendar
+  }
 ];
 
 export default function AdminDashboardLayout({
