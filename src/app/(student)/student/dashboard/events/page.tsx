@@ -16,6 +16,7 @@ export default function EventsPage () {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
+                setIsLoading(true);
                 const response = await axios.get<UpcomingEventResponse>('/api/get-events');
                 const message = response.data.message;
                 setEvents(response.data.events);
@@ -23,6 +24,8 @@ export default function EventsPage () {
                 const axiosError = error as AxiosError<UpcomingEventResponse>;
                 const message = axiosError.response?.data.message || "Some Error Occured";
                 toast.error(message);
+            } finally {
+                setIsLoading(false);
             }
         }
         fetchEvents();
