@@ -18,15 +18,19 @@ export async function GET (request: NextRequest) {
             });
         }
 
-        const studentId = user.student?.id;
+        const id = user.id;
 
-        const student = await prisma.student.findUnique({
+        const studentOralumni = await prisma.user.findUnique({
             where: {
-                id: studentId
+                id: id
             },
+            include: {
+                student: true,
+                alumni: true
+            }
         })
 
-        const collegeName = student?.collegeName;
+        const collegeName = studentOralumni?.student?.collegeName || studentOralumni?.alumni?.collegeName;
 
         if (!collegeName) {
             return NextResponse.json({
