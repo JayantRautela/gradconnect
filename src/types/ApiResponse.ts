@@ -195,3 +195,9 @@ export interface CreateEventResponse {
     message: string;
     event?: Event;
 }
+
+export interface EventDetailsResponse {
+    success: boolean;
+    message: string;
+    event?: Event;
+}
