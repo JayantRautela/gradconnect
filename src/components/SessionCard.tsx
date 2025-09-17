@@ -11,6 +11,15 @@ interface SessionCardProps {
 }
 
 export default function SessionCard ({ time, title, currentCompany, onClick, name, maxParticipant }: SessionCardProps) {
+  const isoString = time;
+  const dateObj = new Date(isoString);
+
+  const date = dateObj.toISOString().split("T")[0]; 
+  const timeOfSession = dateObj.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-sm">
       <div className="p-6">
@@ -19,28 +28,31 @@ export default function SessionCard ({ time, title, currentCompany, onClick, nam
         </h3>
         
         <div className="space-y-2">
-          <div className="flex items-center text-gray-600">
-            <svg className="w-5 h-5 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            <span className="text-sm font-medium">{time}</span>
+          <div className="flex items-center">
+            <p className="text-sm font-semibold">Time :- </p>
+            <span className="text-sm font-medium">{timeOfSession}</span>
+          </div>
+          <div className="flex items-center">
+            <p className="text-sm font-semibold">Date :- </p>
+            <span className="text-sm font-medium">{date}</span>
           </div>
           
-          <div className="flex items-center text-gray-600">
-            <svg className="w-5 h-5 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+          <div className="flex items-center mb-2">
+            <p className="text-sm font-semibold">Alumni :- </p>
             <span className="text-sm font-medium">{name}</span>
           </div>
         </div>
-        <div className="text-left">
-          <span className="text-sm font-medium">{currentCompany}</span>
+        <div className="space-y-2">
+          <div className="flex items-center">
+            <p className="text-sm font-semibold">Current Company :- </p>
+            <span className="text-sm font-medium">{currentCompany}</span>
+          </div>
+          <div className="flex items-center">
+            <p className="text-sm font-semibold">Maximum Participant :- </p>
+            <span className="text-sm font-medium">{maxParticipant}</span>
+          </div>
         </div>
-        <div className="text-left">
-          <span className="text-sm font-medium">{maxParticipant}</span>
-        </div>
-        <Button variant={"outline"} onClick={onClick} className="cursor-pointer">
+        <Button variant={"outline"} onClick={onClick} className="cursor-pointer mt-3">
           <Eye />
           View Details
         </Button>

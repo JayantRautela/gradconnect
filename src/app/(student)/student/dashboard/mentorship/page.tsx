@@ -12,7 +12,7 @@ import { toast } from "sonner";
 export default function MentorhsipPage () {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-    const [upcomingSession, setUpcomingSessions] = useState<Session[]>();
+    const [upcomingSession, setUpcomingSessions] = useState<Session[]>([]);
 
     useEffect(() => {
         const fetchSession = async () => {
@@ -21,7 +21,9 @@ export default function MentorhsipPage () {
                 const response = await axios.get<GetSessionResponse>('/api/student/get-all-mentorship-sessions');
                 const message = response.data.message;
                 toast.success(message);
-                setUpcomingSessions(response.data.session);
+                console.log("Response :- ", response.data);
+                setUpcomingSessions(response.data.data!);
+                console.log("upcoming sessions :- ",upcomingSession);
             } catch (error) {
                 const axiosError = error as AxiosError<GetSessionResponse>;
                 const message = axiosError.response?.data.message || "Some Error Occured";

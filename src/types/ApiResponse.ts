@@ -227,5 +227,5 @@ export interface EventDetailsResponse {
 export interface GetSessionResponse {
     success: boolean;
     message: string;
-    session?: Session[];
+    data?: Session[];
 }
