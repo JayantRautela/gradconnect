@@ -1,7 +1,7 @@
 'use client';
 import SessionCard from "@/components/SessionCard";
 import { Button } from "@/components/ui/button";
-import { GetSessionResponse, Session } from "@/types/ApiResponse";
+import { GetSessionResponse, JoinSessionResponse, Session } from "@/types/ApiResponse";
 import axios, { AxiosError } from "axios";
 import { Loader2, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,8 @@ export default function MentorhsipPage () {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
     const [upcomingSession, setUpcomingSessions] = useState<Session[]>([]);
+    const [hasJoined, setHasJoined] = useState(false);
+    const [isJoining, setIsJoining] = useState(false);
 
     useEffect(() => {
         const fetchSession = async () => {
@@ -35,8 +37,22 @@ export default function MentorhsipPage () {
         fetchSession();
     }, [])
 
-    const redirectEventDetails = (id: string) => {
-        router.push(`/student/dashboard/mentorship/${id}`);
+    const redirectEventDetails = async (id: string) => {
+        try {
+            setIsJoining(true);
+            const response = await axios.post<JoinSessionResponse>(`/api/alumni/join-mentorship-session/${id}`);
+            const message = response.data.message;
+            alert(`Copy the link and join the meeting on time :- ${response.data.link}`);
+            toast.success(message);
+            setHasJoined(true);
+        } catch (error) {
+            const axiosError = error as AxiosError<JoinSessionResponse>;
+            const message = axiosError.response?.data.message || "Some Error Occured";
+            toast.error(message);
+            if (message === "Session is full") setHasJoined(true);
+        } finally {
+            setIsJoining(false);
+        }
     }
 
     return (
@@ -72,6 +88,8 @@ export default function MentorhsipPage () {
                                                         onClick = {() => redirectEventDetails(session.id)}
                                                         name = {session.createdBy.name}
                                                         maxParticipant = {session.maxParticipant}
+                                                        buttonDisabled = {hasJoined}
+                                                        isJoining = {isJoining}
                                                     />
                                                 ))
                                             }

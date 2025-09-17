@@ -229,3 +229,9 @@ export interface GetSessionResponse {
     message: string;
     data?: Session[];
 }
+
+export interface JoinSessionResponse {
+    success: boolean;
+    message: string;
+    link?: string;
+}

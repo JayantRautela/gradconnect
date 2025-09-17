@@ -1,4 +1,3 @@
-import { Calendar, Eye } from "lucide-react";
 import { Button } from "./ui/button";
 
 interface SessionCardProps {
@@ -8,9 +7,11 @@ interface SessionCardProps {
   name: string;
   currentCompany: string;
   onClick: () => void; 
+  buttonDisabled: boolean;
+  isJoining: boolean;
 }
 
-export default function SessionCard ({ time, title, currentCompany, onClick, name, maxParticipant }: SessionCardProps) {
+export default function SessionCard ({ time, title, currentCompany, onClick, name, maxParticipant, isJoining, buttonDisabled }: SessionCardProps) {
   const isoString = time;
   const dateObj = new Date(isoString);
 
@@ -52,9 +53,14 @@ export default function SessionCard ({ time, title, currentCompany, onClick, nam
             <span className="text-sm font-medium">{maxParticipant}</span>
           </div>
         </div>
-        <Button variant={"outline"} onClick={onClick} className="cursor-pointer mt-3">
-          <Eye />
-          View Details
+        <Button onClick={onClick} disabled={buttonDisabled} className="cursor-pointer mt-3 bg-green-500 hover:bg-green-600">
+          {
+            isJoining ? (
+              "Joining..."
+            ) : (
+              "Join"
+            )
+          }
         </Button>
       </div>
     </div>
