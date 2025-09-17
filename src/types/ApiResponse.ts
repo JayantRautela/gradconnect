@@ -180,7 +180,29 @@ export interface Session {
         userId: string;
         sessionId: string;
         joinedAt: Date;
-    }[]
+    }[];
+    createdBy: {
+        id: string;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+        course: Course;
+        branch: string;
+        isVerified: boolean;
+        collegeName: string;
+        rollNo: string;
+        ProfilePictureUrl: string | null;
+        userId: string;
+        phoneNumber: string;
+        cgpa:  number;
+        currentCompany: string;
+        yearOfExperience: number;
+        passoutYear: number;
+        isOpenToTakeMentorshipSession: boolean;
+        linkedinProfileUrl: string;
+        portfolioLink: string | null;
+        currentPosition: string;
+    };
 }
 
 export interface SessionResponse {
@@ -200,4 +222,10 @@ export interface EventDetailsResponse {
     success: boolean;
     message: string;
     event?: Event;
+}
+
+export interface GetSessionResponse {
+    success: boolean;
+    message: string;
+    session?: Session[];
 }
