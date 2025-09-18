@@ -1,19 +1,16 @@
 'use client';
 import SessionCard from "@/components/SessionCard";
-import { Button } from "@/components/ui/button";
 import { GetSessionResponse, JoinSessionResponse, Session } from "@/types/ApiResponse";
 import axios, { AxiosError } from "axios";
-import { Loader2, Plus } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 
 export default function MentorhsipPage () {
     const [isLoading, setIsLoading] = useState(false);
-    const router = useRouter();
     const [upcomingSession, setUpcomingSessions] = useState<Session[]>([]);
-    const [hasJoined, setHasJoined] = useState(false);
+    const [joinedSessions, setJoinedSessions] = useState<string[]>([]);
     const [isJoining, setIsJoining] = useState(false);
 
     useEffect(() => {
@@ -37,6 +34,31 @@ export default function MentorhsipPage () {
         fetchSession();
     }, [])
 
+    useEffect(() => {
+        const checkStatuses = async () => {
+            try {
+                for (const session of upcomingSession) {
+                    const res = await axios.get<GetSessionResponse>(
+                        `/api/student/check-join-status/${session.id}` // 👈 sessionId in params
+                    );
+
+                    if (res.data.success) {
+                        setJoinedSessions((prev) => [...prev, session.id]);
+                    }
+                }
+            } catch (error) {
+                const axiosError = error as AxiosError<GetSessionResponse>;
+                const message = axiosError.response?.data.message || "Failed to check join status";
+                toast.error(message);
+            }
+        };
+
+        if (upcomingSession.length > 0) {
+            checkStatuses();
+        }
+    }, [upcomingSession]);
+
+
     const redirectEventDetails = async (id: string) => {
         try {
             setIsJoining(true);
@@ -44,12 +66,12 @@ export default function MentorhsipPage () {
             const message = response.data.message;
             alert(`Copy the link and join the meeting on time :- ${response.data.link}`);
             toast.success(message);
-            setHasJoined(true);
+            setJoinedSessions((prev) => [...prev, id]);
         } catch (error) {
             const axiosError = error as AxiosError<JoinSessionResponse>;
             const message = axiosError.response?.data.message || "Some Error Occured";
             toast.error(message);
-            if (message === "Session is full") setHasJoined(true);
+            if (message === "Session is full") setJoinedSessions((prev) => [...prev, id]);
         } finally {
             setIsJoining(false);
         }
@@ -88,7 +110,7 @@ export default function MentorhsipPage () {
                                                         onClick = {() => redirectEventDetails(session.id)}
                                                         name = {session.createdBy.name}
                                                         maxParticipant = {session.maxParticipant}
-                                                        buttonDisabled = {hasJoined}
+                                                        buttonDisabled={joinedSessions.includes(session.id)}
                                                         isJoining = {isJoining}
                                                     />
                                                 ))

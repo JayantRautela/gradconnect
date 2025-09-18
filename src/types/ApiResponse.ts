@@ -234,4 +234,5 @@ export interface JoinSessionResponse {
     success: boolean;
     message: string;
     link?: string;
+    alreadyJoined?: boolean;
 }
