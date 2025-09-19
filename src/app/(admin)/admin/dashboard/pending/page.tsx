@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Badge, Check, Eye, Loader2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Loader from "@/components/Loader";
 
 export default function Pending() {
   const [isLoading, setIsLoading] = useState(false);
@@ -94,10 +95,7 @@ export default function Pending() {
   return (
     <div className="p-4">
       {isLoading ? (
-        <div className="w-full h-screen flex items-center justify-center gap-2">
-          <p className="text-5xl font-bold">Loading...</p>
-          <Loader2 className="w-12 h-12 animate-spin"/>
-        </div>
+        <Loader />
       ) : alumni.length === 0 ? (
         <p>No pending requests</p>
       ) : (

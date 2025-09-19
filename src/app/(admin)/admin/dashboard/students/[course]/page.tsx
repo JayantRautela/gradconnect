@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Loader from "@/components/Loader";
 
 export default function AllAlumniPage () {
     const { course } = useParams();
@@ -43,10 +44,7 @@ export default function AllAlumniPage () {
         <div className="p-4">
             {
                 isLoading ? (
-                    <div className="w-full h-screen flex items-center justify-center gap-2">
-                        <p className="text-5xl font-bold">Loading...</p>
-                        <Loader2 className="w-12 h-12 animate-spin"/>
-                    </div>
+                    <Loader />
                 ) : (
                     <div>
                         { students?.length === 0 ? (

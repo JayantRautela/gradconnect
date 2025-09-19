@@ -10,6 +10,7 @@ import { GetCourseResponse, GetPassoutYearsResponse } from "@/types/ApiResponse"
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Course } from "@prisma/client";
+import Loader from "@/components/Loader";
 
 const mockAlumni = [
   {
@@ -101,7 +102,7 @@ export default function AlumniDirectory() {
     <div className="space-y-6">
       {
         isLoading ?  (
-          <div>Loading</div>
+          <Loader />
         ) : (
           <>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

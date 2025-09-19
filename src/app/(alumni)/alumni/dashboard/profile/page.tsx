@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
+import Loader from "@/components/Loader";
 
 export default function ProfilePage () {
     const [imageSrc, setImageSrc] = useState<string | null>("");
@@ -38,10 +39,7 @@ export default function ProfilePage () {
   return (
     <div className="p-4">
       {isLoading ? (
-        <div className="w-full h-screen flex items-center justify-center gap-2">
-          <p className="text-5xl font-bold">Loading...</p>
-          <Loader2 className="w-12 h-12 animate-spin" />
-        </div>
+        <Loader />
       ) : (
         <div className="space-y-4">
           <Card key={alumni?.id} className="hover:shadow-md transition-shadow">

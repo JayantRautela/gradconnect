@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {  Mail, Loader2, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Loader from "@/components/Loader";
 
 
 export default function Profile() {
@@ -37,10 +38,7 @@ export default function Profile() {
   return (
     <div className="space-y-4">
       { isLoading ? (
-        <div className="w-full h-screen flex items-center justify-center gap-2">
-          <p className="text-5xl font-bold">Loading...</p>
-          <Loader2 className="w-12 h-12 animate-spin"/>
-        </div>
+        <Loader />
         ) : (
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

@@ -1,4 +1,5 @@
 'use client';
+import Loader from "@/components/Loader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Event, EventDetailsResponse } from "@/types/ApiResponse";
 import axios, { AxiosError } from "axios";
@@ -41,10 +42,7 @@ export default function EventDetailsPage () {
     return (
         <div className="p-4">
       {isLoading ? (
-        <div className="w-full h-screen flex items-center justify-center gap-2">
-          <p className="text-5xl font-bold">Loading...</p>
-          <Loader2 className="w-12 h-12 animate-spin" />
-        </div>
+        <Loader />
       ) : (
         <div className="space-y-4">
           <h1 className="text-3xl font-bold">Events Details</h1>

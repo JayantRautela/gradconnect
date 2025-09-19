@@ -1,4 +1,5 @@
 'use client';
+import Loader from "@/components/Loader";
 import SessionCard from "@/components/SessionCard";
 import { GetSessionResponse, JoinSessionResponse, Session } from "@/types/ApiResponse";
 import axios, { AxiosError } from "axios";
@@ -81,10 +82,7 @@ export default function MentorhsipPage () {
         <div className="space-y-6">
             {
                 isLoading ? (
-                    <div className="w-full h-screen flex items-center justify-center gap-2">
-                        <p className="text-5xl font-bold">Loading...</p>
-                        <Loader2 className="w-12 h-12 animate-spin"/>
-                    </div>
+                    <Loader />
                 ) : (
                     <>
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

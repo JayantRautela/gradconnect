@@ -1,5 +1,6 @@
 'use client';
 import EventCard from "@/components/EventCard";
+import Loader from "@/components/Loader";
 import { SelectSeparator } from "@/components/ui/select";
 import { Event, UpcomingEventResponse } from "@/types/ApiResponse";
 import axios, { AxiosError } from "axios";
@@ -40,10 +41,7 @@ export default function EventsPage () {
         <div className="space-y-6">
             {
                 isLoading ? (
-                    <div className="w-full h-screen flex items-center justify-center gap-2">
-                        <p className="text-5xl font-bold">Loading...</p>
-                        <Loader2 className="w-12 h-12 animate-spin"/>
-                    </div>
+                    <Loader />
                 ) : (
                     <>
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
