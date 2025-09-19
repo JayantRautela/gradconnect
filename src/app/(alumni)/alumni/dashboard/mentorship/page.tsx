@@ -81,10 +81,39 @@ export default function MentorhsipPage () {
                                                     <Card key={session.id}>
                                                         <CardHeader>
                                                             <CardTitle>{session.title}</CardTitle>
-                                                            <CardDescription>Session Date - {new Date(session.time).toLocaleDateString()}</CardDescription>
+                                                            <CardDescription>Created At - {new Date(session.createdAt).toLocaleDateString()}</CardDescription>
                                                         </CardHeader>
                                                         <CardContent>
-                                                            <p>Created At : {new Date(session.createdAt).toLocaleDateString()}</p>
+                                                            <p>Session Date : {new Date(session.time).toLocaleDateString()}</p>
+                                                        </CardContent>
+                                                        <CardFooter>
+                                                            <p>Meeting Url - <Link href={session.meetingUrl} className="text-blue-400">{session.meetingUrl}</Link></p>
+                                                        </CardFooter>
+                                                    </Card>
+                                                ))
+                                            }
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        </div>
+                        <div>
+                            <p className="text-3xl font-semibold">Past Sessions</p>
+                            <div className="mt-8">
+                                {
+                                    upcomingSession?.length === 0 ? (
+                                        <div>No Past Session</div>
+                                    ) : (
+                                        <div className="grid grid-cols-1 gap-2">
+                                            {
+                                                pastSession?.map((session) => (
+                                                    <Card key={session.id}>
+                                                        <CardHeader>
+                                                            <CardTitle>{session.title}</CardTitle>
+                                                            <CardDescription>Created At - {new Date(session.createdAt).toLocaleDateString()}</CardDescription>
+                                                        </CardHeader>
+                                                        <CardContent>
+                                                            <p>Session Date : {new Date(session.time).toLocaleDateString()}</p>
                                                         </CardContent>
                                                         <CardFooter>
                                                             <p>Meeting Url - <Link href={session.meetingUrl} className="text-blue-400">{session.meetingUrl}</Link></p>
