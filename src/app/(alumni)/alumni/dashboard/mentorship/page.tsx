@@ -108,7 +108,7 @@ export default function MentorhsipPage () {
                                                             <p>Session Time : {getSessionTime(session.time)}</p>
                                                         </CardContent>
                                                         <CardFooter>
-                                                            <p>Meeting Url - <Link href={session.meetingUrl} className="text-blue-400">{session.meetingUrl}</Link></p>
+                                                            <p>Meeting Url - <Link href={session.meetingUrl} className="text-blue-400" target="_blank">{session.meetingUrl}</Link></p>
                                                         </CardFooter>
                                                     </Card>
                                                 ))
@@ -137,9 +137,6 @@ export default function MentorhsipPage () {
                                                             <p>Session Date : {getSessionDate(session.time)}</p>
                                                             <p>Session Time : {getSessionTime(session.time)}</p>
                                                         </CardContent>
-                                                        <CardFooter>
-                                                            <p>Meeting Url - <Link href={session.meetingUrl} className="text-blue-400">{session.meetingUrl}</Link></p>
-                                                        </CardFooter>
                                                     </Card>
                                                 ))
                                             }
