@@ -39,6 +39,12 @@ export interface AdminProfileResponse {
     admin: Admin
 }
 
+export interface AlumniProfileResponse {
+    success: boolean;
+    message: string;
+    alumni: Alumni
+}
+
 export interface Alumni {
     user: {
         email: string;
