@@ -12,25 +12,15 @@ import {
 } from "lucide-react";
 
 const sidebarItems = [
-//   {
-//     title: "Alumni Directory",
-//     href: "/admin/dashboard/alumni",
-//     icon: Users,
-//   },
-//   {
-//     title: "Pending Alumni Request",
-//     href: "/admin/dashboard/pending",
-//     icon: Clock,
-//   },
-//   {
-//     title: "Students",
-//     href: "/admin/dashboard/students",
-//     icon: GraduationCap,
-//   },
     {
         title: "Mentorship",
         href: "/alumni/dashboard/mentorship",
         icon: Calendar
+    },
+    {
+      title: "Events",
+      href: "/alumni/dashboard/events",
+      icon: Calendar
     },
     {
         title: "Profile",
