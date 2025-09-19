@@ -48,6 +48,26 @@ export default function MentorhsipPage () {
         router.push('/alumni/dashboard/mentorship/add');
     }
 
+    const getSessionDate = (time: string) => {
+        const isoString = time;
+        const dateObj = new Date(isoString);
+        const date = dateObj.toISOString().split("T")[0];
+        return date;
+    }
+
+    const getSessionTime = (time: string) => {
+        const isoString = time;
+        const dateObj = new Date(isoString);
+
+        const timeOfSession = dateObj.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+        });
+
+        return timeOfSession
+    }
+
     return (
         <div className="space-y-6">
             {
@@ -84,7 +104,8 @@ export default function MentorhsipPage () {
                                                             <CardDescription>Created At - {new Date(session.createdAt).toLocaleDateString()}</CardDescription>
                                                         </CardHeader>
                                                         <CardContent>
-                                                            <p>Session Date : {new Date(session.time).toLocaleDateString()}</p>
+                                                            <p>Session Date : {getSessionDate(session.time)}</p>
+                                                            <p>Session Time : {getSessionTime(session.time)}</p>
                                                         </CardContent>
                                                         <CardFooter>
                                                             <p>Meeting Url - <Link href={session.meetingUrl} className="text-blue-400">{session.meetingUrl}</Link></p>
@@ -113,7 +134,8 @@ export default function MentorhsipPage () {
                                                             <CardDescription>Created At - {new Date(session.createdAt).toLocaleDateString()}</CardDescription>
                                                         </CardHeader>
                                                         <CardContent>
-                                                            <p>Session Date : {new Date(session.time).toLocaleDateString()}</p>
+                                                            <p>Session Date : {getSessionDate(session.time)}</p>
+                                                            <p>Session Time : {getSessionTime(session.time)}</p>
                                                         </CardContent>
                                                         <CardFooter>
                                                             <p>Meeting Url - <Link href={session.meetingUrl} className="text-blue-400">{session.meetingUrl}</Link></p>
