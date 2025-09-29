@@ -6,7 +6,8 @@ import { usePathname } from "next/navigation";
 import { 
   Users, 
   User,
-  Calendar
+  Calendar,
+  Bell
 } from "lucide-react";
 
 const sidebarItems = [
@@ -29,6 +30,11 @@ const sidebarItems = [
     title: "Events",
     href: "/student/dashboard/events",
     icon: Calendar
+  },
+  {
+    title: "Feed",
+    href: "/admin/dashboard/feed",
+    icon: Bell
   }
 ];
 

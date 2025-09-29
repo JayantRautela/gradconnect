@@ -8,7 +8,8 @@ import {
   Clock, 
   GraduationCap, 
   User,
-  Calendar
+  Calendar,
+  Bell
 } from "lucide-react";
 
 const sidebarItems = [
@@ -27,6 +28,11 @@ const sidebarItems = [
         href: "/alumni/dashboard/profile",
         icon: User,
     },
+    {
+      title: "Feed",
+      href: "/admin/dashboard/feed",
+      icon: Bell
+    }
 ];
 
 export default function AdminDashboardLayout({
